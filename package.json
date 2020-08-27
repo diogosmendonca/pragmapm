@@ -1,0 +1,26 @@
+{
+  "name": "pragmapm",
+  "version": "0.0.1",
+  "description": "Um software para o gestor de projetos pragmático",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "acc_test": "cucumber-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diogosmendonca/pragmapm.git"
+  },
+  "author": "Diogo S. Mendonça",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/diogosmendonca/pragmapm/issues"
+  },
+  "homepage": "https://github.com/diogosmendonca/pragmapm#readme",
+  "devDependencies": {
+    "cucumber": "^6.0.5"
+  }
+}
