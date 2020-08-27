@@ -14,7 +14,7 @@ git init
 Adiciona o repositório remoto (mudar para o seu repositório de projeto)
 
 ```bash
-git remote add origin git@github.com:diogosmendonca/pragmapm.git
+git remote add origin https://github.com/diogosmendonca/pragmapm.git
 ```
 
 ## 1.1 Sempre que completar uma alteração adicionar ela ao repositório
@@ -44,3 +44,11 @@ git push -u origin master
 ```
 
 
+# 2. Separando documentação e código fonte
+
+Criar duas pastas separadas: docs para documentos e src para código-fonte.
+
+```bash
+mkdir docs
+mkdir src
+```
