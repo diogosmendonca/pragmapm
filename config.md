@@ -139,13 +139,6 @@ module.exports = {
 }
 ```
 
-Crie também um arquivo chamado `features/step_definitions/stepdefs.js` e inclua o seguinte conteúdo nele:
-
-```javascript
-const assert = require('assert');
-const { Given, When, Then } = require('cucumber');
-```
-
 Configure o script de execução no `package.json`. Esta configuração fica na seção `scripts` do arquivo. Basta ter uma linha igual a que segue abaixo nesta seção do arquivo. Não esqueça de colocar a virgurla na linha anterior para não quebrar a sintaxe do JSON caso vá somente incluir esta linha. 
 
 Incluir na seção `scripts` do `package.json`:
