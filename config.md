@@ -152,4 +152,67 @@ Verifique a instalação ao executar os testes de aceitação com o comando
 npm run acc_test
 ```
 
+## 4.4. Instalando Cypress e integrando ele com o Cucumber
+
+O Cypress é uma engine de execução de testes End-to-End (ou seja, testes de sistema ou aceitação). Ele permite a programação do acesso aos elementos do HTML e automatiza sua exeução, sendo possível visualizar os testes em execução e registrando o seu histórico. É uma ferramenta muito útil e atualmente tem se mostrado mais fácil de usar e com um suporte melhor que o Selenium (ferramenta similar com o mesmo propósito). Contudo, a escrita dos cenários de teste usando o Gherkin e o uso do Cucumber para ligá-los aos testes automatizados ainda se faz necessária. O Cypress servirá como engine para execução dos testes no browser, não servido como especificação de alto nível destes.
+
+Para instalação do Cypress e sua integração com o Cucumber executar os comandos abaixo:
+
+```bash
+npm install cypress cypress-cucumber-preprocessor --save-dev 
+```
+
+Devido ao uso do Cypress serão necessárias alterações na estrutura de pastas do projeto. Ao rodar o Cypres pela primeira vez ele criará uma pasta chamada cypress com a estrutura de diretórios padrão, necessária para ele rodar. Para criá-la execute:
+
+```bash
+node_modules\.bin\cypress open
+```
+Uma outra forma de rodar o mesmo comando é com o comando abaixo. Ele abre o browser para exibição da execução dos testes de forma interativa. 
+
+```bash
+npx cypress open
+```
+
+Se quiser rodar os testes em "modo batch" (em lote), execute o comando abaixo. Ele executa os testes e gera prints das tels e vídeos das execuções. Salvando nas pastas `cypress/screenshots` e `cypress/videos`. Não esqueça de incluir estas pastas no `.gitignore` se for rodar o modo batch.
+
+```bash
+npx cypress run
+```
+
+Para integrar o Cypress e cucumber algunas alterações são necessárias:
+
+Adicione a seguinte configração ao package.json do projeto. 
+
+```JSON
+"cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  }
+```
+
+Adicione o seguinte código ao `cypress/plugins/intex.js`. Isto ativa o plugin do cucumber-preprocessor no cypress.
+
+```Javascript
+const cucumber = require('cypress-cucumber-preprocessor').default
+
+module.exports = (on, config) => {
+  on('file:preprocessor', cucumber())
+}
+
+```
+
+Configure no `cypress.json` a extensão .feature como arquivos de testes e o endereço da aplicação.
+
+```JSON
+{
+    "testFiles": "**/*.feature",
+    "baseUrl": "http://localhost:3000/"
+}
+```
+
+Mova seus arquivos `.feature` do diretório `/features` para `/cypress/integration`. Este será o novo diretório para features. Seus steps definitions podem ser colocados em subpastas com os nomes das features. Por exemplo, se você tem um arquivo `cypress/integration/listar_projetos.feature` seus setepdefs ficam em `cypress/integragion/listar_projeto/`. Os stepdefs em comum ficam na pasta `cypress/integration/common/`. Você pode apagar agora o diretório `features` ele não será mais necessário. Se o cypress tiver gerado arquivos de exemplo na pasta `integration` você pode apagá-los assim como os arquivos gerados na pasta `fixtures`. 
+
+O comando de script `acc_test` definido no `packege.json` anteriormente também não será mais necessário para rodar os testes de aceitação, visto que utilizaremos o Cypress. Ele pode ser substituído pelo `npx cypress run` ou `npx cypress open` segundo a preferência do desenvolvedor.
+
+Para maiores informações sobre o Cypress recorra a [documentação dele](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell). Para informações sobre o plugin de integração do cypress com cucumber a documentação pode ser encontrada [aqui](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor).
+
 

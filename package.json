@@ -8,7 +8,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "acc_test": "cucumber-js"
+    "acc_test_it": "npx cypress open",
+    "acc_test_run": "npx cypress run",
+    "dev": "lite-server --baseDir=\"src\""
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   },
   "repository": {
     "type": "git",
@@ -21,6 +26,10 @@
   },
   "homepage": "https://github.com/diogosmendonca/pragmapm#readme",
   "devDependencies": {
-    "cucumber": "^6.0.5"
-  }
+    "cucumber": "^6.0.5",
+    "cypress": "^5.0.0",
+    "cypress-cucumber-preprocessor": "^2.5.5",
+    "lite-server": "^2.5.4"
+  },
+  "dependencies": {}
 }
