@@ -9,6 +9,10 @@ Funcionalidade: Listagem de Projetos
 
     Contexto: 
         Dado que temos projetos cadastrados
+            | Projeto     |  Unidade  |  UnAtual | UnTotal | IDC | IDP |
+            | Projeto X   |  Semana   |  2       |  4      | 0.8 | 0.9 |
+            | Projeto Y   |  Mês      |  4       |  6      | 1.3 | 1.0 |
+            | Projeto Z   |  Semana   |  3       |  10     | 1.0 | 1.0 |
 
     Cenário: Exibir Listagem de Projetos
         Quando a tela de listagem de projetos é acessada
