@@ -12,7 +12,7 @@ Funcionalidade: Listagem de Projetos
 
     Cenário: Exibir Listagem de Projetos
         Quando a tela de listagem de projetos é acessada
-        Então os projetos são exibidos com seu nome, unidade de medida, andamento (unidade atual e unidades totais), IDC e IDP
+        Então os projetos são exibidos
 
     Cenário: Novo projeto
         Dado que é exibida a tela de listagem de projetos
