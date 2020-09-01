@@ -114,7 +114,26 @@ As dependências do npm são instaladas como padrão com a configuração de dep
 npm install <nome_do_pacote> --save-dev
 ```
 
-## 4.3. Instalando e configurando o Cucumber (Documentação e execução de testes de aceitação usando BDD - Behavior Driven Development)
+## 4.3. Rodando uma aplicação web simples com lite-server
+
+O lite-server é um servidor web local que tem como propósito suportar o desenvolvimento de aplicações simples. Ele suporta o reload dinâmico ao alterar um arquivo. Para instalação execute o comando abaixo.
+
+```bash
+npm install lite-server --save-dev
+```
+
+Após instalar a dependência você pode instalar um script no package.json para rodar o servidor de desenvolvimento. Adicione na seção `scrpts` do `package.json` o trecho abaixo. Repare, nele há uma configuração para indicar que os código da aplicação fica localizada na pasta `src`. Caso na sua aplicação seja diferente ajuste conforme necessário.
+
+```JSON
+    "dev": "lite-server --baseDir=\"src\""
+```
+
+Para rodar a aplicação execute
+```bash
+npm run dev
+```
+
+## 4.4. Instalando e configurando o Cucumber (Documentação e execução de testes de aceitação usando BDD - Behavior Driven Development)
 
 O Cucumber é uma ferramenta muito útil para ligar a documentação dos testes de aceitação com a execução dos mesmos. Desta forma, facilitamos o entendimentos dos testes de aceitação, visto que este costumam ser compartilhados com os stakeholders do projeto, e ainda o tornamos executável sendo documentação viva do projeto. Um tutorial básico sobre o Cucumber pode ser encontrado [neste link](https://cucumber.io/docs/guides/10-minute-tutorial/). Já a documentação da linguagem Gherkin, que é utilizada na documentação, [encontra-se aqui](https://cucumber.io/docs/gherkin/). Os passos abaixo são somente para configurar o projeto inicialmente. A teoria sobre BDD e porque ela é útil são explicados na disciplina de Teste de Software.
 
@@ -152,9 +171,9 @@ Verifique a instalação ao executar os testes de aceitação com o comando
 npm run acc_test
 ```
 
-## 4.4. Instalando Cypress e integrando ele com o Cucumber
+## 4.5. Instalando Cypress e integrando ele com o Cucumber
 
-O Cypress é uma engine de execução de testes End-to-End (ou seja, testes de sistema ou aceitação). Ele permite a programação do acesso aos elementos do HTML e automatiza sua exeução, sendo possível visualizar os testes em execução e registrando o seu histórico. É uma ferramenta muito útil e atualmente tem se mostrado mais fácil de usar e com um suporte melhor que o Selenium (ferramenta similar com o mesmo propósito). Contudo, a escrita dos cenários de teste usando o Gherkin e o uso do Cucumber para ligá-los aos testes automatizados ainda se faz necessária. O Cypress servirá como engine para execução dos testes no browser, não servido como especificação de alto nível destes.
+O Cypress é uma engine de execução de testes End-to-End (ou seja, testes de sistema ou aceitação) para aplicações web. Ele permite a programação do acesso aos elementos do HTML e automatiza sua exeução, sendo possível visualizar os testes em execução e registrando o seu histórico. É uma ferramenta muito útil e atualmente tem se mostrado mais fácil de usar e com um suporte melhor que o Selenium (ferramenta similar com o mesmo propósito). Contudo, a escrita dos cenários de teste usando o Gherkin e o uso do Cucumber para ligá-los aos testes automatizados ainda se faz necessária. O Cypress servirá como engine para execução dos testes no browser, não servido como especificação de alto nível destes.
 
 Para instalação do Cypress e sua integração com o Cucumber executar os comandos abaixo:
 
