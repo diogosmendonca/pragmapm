@@ -7,7 +7,7 @@ Given('que temos projetos cadastrados', function (projetos) {
 });
 
 When('a tela de listagem de projetos é acessada', function () {
-    cy.visit('./index.html');
+    cy.visit('./');
 });
 
 Then('os projetos são exibidos', function () {
@@ -15,17 +15,17 @@ Then('os projetos são exibidos', function () {
     for(let i in this.projetos){
         
         cy.get("#projetos")
-            .find('tbody tr').eq(i)
+            .find('tr').eq(i)
             .contains('td:first', this.projetos[i].Projeto)
             .should('be.visible')
             
             cy.get("#projetos")
-            .find('tbody tr').eq(i).find('td').eq(1)
+            .find('tr').eq(i).find('td').eq(1)
             .should('contain', `${this.projetos[i].Unidade} ${this.projetos[i].UnAtual}/${this.projetos[i].UnTotal} IDC ${this.projetos[i].IDC} IDP ${this.projetos[i].IDP}`)
             .should('be.visible')
             
             cy.get("#projetos")
-            .find('tbody tr').eq(i).find('td').eq(2)
+            .find('tr').eq(i).find('td').eq(2)
             .should('contain', 'X')
             .should('be.visible')
     }

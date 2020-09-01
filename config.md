@@ -5,6 +5,8 @@ Assim o aluno pode reproduzir a configuração em seu próprio projeto.
 
 # 1. Criar o repositório do GIT e comandos básicos do  GIT
 
+Precisaremos de um controle de versão para o projeto. O software de controle de versão mais popular hoje em dia é o [git](https://git-scm.com/). Não confundir com [Github](https://github.com/), que é somente um repositório remoto. 
+
 ## 1.1 Somente uma vez no início do projeto
 
 Criar o respositório 
@@ -268,9 +270,23 @@ Reparem todos estes frameworks são para desenvolvimento Web-first, ou seja, pri
 
 ### 4.2 Instalando e configurando o React
 
+Apesar do site do React dizer que você não precisa de um toolchain (cadeia de ferramentas) para fazer desenvolvimento em React na verdade é melhor ter uma, pois sem ela seu desenvolvimento será mais lento e sofrível. Quando você cria um projeto react do zero, pelo comando abaixo, ele já configura para você o Babel para compilação do ES6 e o Webpack para comprimir e gerar os arquivos distribuíves da aplicação, ou seja, uma versão de produção. Além disto, o React usa como padrão o gerenciador de pactes Yarn (além do NPM que ele também usa). Os comandos do React no manual dele todos usam o Yarn, ou seja, se você não usá-lo terá que se virar para encontrar comandos similares na web. No final das contas é melhor usar o toolchain nativo do React. Para inicializar um projeto do zero com o React rode o comando abaixo:
+
+```bash
+npx create-react-app <nome-da-pasta-da-aplicação>
+```
+
+Reparem, se você já tem uma aplicação na pasta referenciada o comando provavelmente não irá funcionar. Para Instalar o React em uma aplicação existente juto com o seu toolchain siga as instruções abaixo. 
+
+1. Rode o comando `npx create-react-app` em uma outra pasta.
+2. Instale as dependências com o Yarn rodando: `yarn add --dev cucumber cypress cypress-cucumber-preprocessor`.
+3. Copie a pasta `cypress` e `docs` inteira da do seu projeto para a nova pasta, assim como os arquivos config.md, cypress.json e cucumber.js. Se for necessário faça merge das pastas.
+4. Faça o merge manual dos arquivos `package.json` e `.gitignore` na nova pasta criada. Você pode usar alguma ferramenta de merge para auxiliá-lo, caso seja necessário.
+5. Git.
 
 
-## 4.8 Empacotando e distribuindo
+
+## 4.8 Empacotando e distribuindo (web e mobile)
 
 ## 4.9 Testes de Unidade
 

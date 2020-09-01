@@ -1,35 +1,51 @@
 {
   "name": "pragmapm",
   "version": "0.0.1",
+  "private": true,
+  "author": "Diogo S. Mendonça",
+  "license": "LGPL-3.0-or-later",
   "description": "Um software para o gestor de projetos pragmático",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "acc_test_it": "npx cypress open",
-    "acc_test_run": "npx cypress run",
-    "dev": "lite-server --baseDir=\"src\""
-  },
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/diogosmendonca/pragmapm.git"
   },
-  "author": "Diogo S. Mendonça",
-  "license": "LGPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/diogosmendonca/pragmapm/issues"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "acc_test_it": "npx cypress open",
+    "acc_test_run": "npx cypress run"
   },
-  "homepage": "https://github.com/diogosmendonca/pragmapm#readme",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
     "cucumber": "^6.0.5",
-    "cypress": "^5.0.0",
-    "cypress-cucumber-preprocessor": "^2.5.5",
-    "lite-server": "^2.5.4"
+    "cypress": "^5.1.0",
+    "cypress-cucumber-preprocessor": "^2.5.5"
   },
-  "dependencies": {}
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  }
 }
