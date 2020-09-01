@@ -1,6 +1,7 @@
-**Este arquivo tem como objetivo documentar os passos de linha de comando
-para configurar projeto similar. Assim o aluno pode reproduzir a configuração
-em seu próprio projeto.**
+# Montando a Stack de Desenvolvimento e Testes
+Este arquivo tem como objetivo documentar o passo-a-passo para configurar a stack (pilha ou conjunto de tecnologias) de desenvolvimento e testes para um projeto similar. 
+
+Assim o aluno pode reproduzir a configuração em seu próprio projeto.
 
 # 1. Criar o repositório do GIT e comandos básicos do  GIT
 
@@ -122,7 +123,7 @@ O lite-server é um servidor web local que tem como propósito suportar o desenv
 npm install lite-server --save-dev
 ```
 
-Após instalar a dependência você pode instalar um script no package.json para rodar o servidor de desenvolvimento. Adicione na seção `scrpts` do `package.json` o trecho abaixo. Repare, nele há uma configuração para indicar que os código da aplicação fica localizada na pasta `src`. Caso na sua aplicação seja diferente ajuste conforme necessário.
+Após instalar a dependência você pode instalar um script no package.json para rodar o servidor de desenvolvimento. Adicione na seção `scrpts` do `package.json` o trecho abaixo. Repare, nele há uma configuração para indicar que o código da aplicação fica localizada na pasta `src`. Caso na sua aplicação seja diferente ajuste conforme necessário.
 
 ```JSON
     "dev": "lite-server --baseDir=\"src\""
@@ -135,7 +136,7 @@ npm run dev
 
 ## 4.4. Instalando e configurando o Cucumber (Documentação e execução de testes de aceitação usando BDD - Behavior Driven Development)
 
-O Cucumber é uma ferramenta muito útil para ligar a documentação dos testes de aceitação com a execução dos mesmos. Desta forma, facilitamos o entendimentos dos testes de aceitação, visto que este costumam ser compartilhados com os stakeholders do projeto, e ainda o tornamos executável sendo documentação viva do projeto. Um tutorial básico sobre o Cucumber pode ser encontrado [neste link](https://cucumber.io/docs/guides/10-minute-tutorial/). Já a documentação da linguagem Gherkin, que é utilizada na documentação, [encontra-se aqui](https://cucumber.io/docs/gherkin/). Os passos abaixo são somente para configurar o projeto inicialmente. A teoria sobre BDD e porque ela é útil são explicados na disciplina de Teste de Software.
+O Cucumber é uma ferramenta muito útil para ligar a documentação dos testes de aceitação com a execução deles. Desta forma, facilitamos o entendimento dos testes de aceitação, visto que este costumam ser compartilhados com os stakeholders do projeto, e ainda o tornamos executável sendo documentação viva do projeto. Um tutorial básico sobre o Cucumber pode ser encontrado [neste link](https://cucumber.io/docs/guides/10-minute-tutorial/). Já a documentação da linguagem Gherkin, que é utilizada na documentação, [encontra-se aqui](https://cucumber.io/docs/gherkin/). Os passos abaixo são somente para configurar o projeto inicialmente. A teoria sobre BDD e porque ela é útil são explicados na disciplina de Teste de Software.
 
 Instale a dependência do Cucumber como somente desenvolvimento.
 
@@ -171,7 +172,7 @@ Verifique a instalação ao executar os testes de aceitação com o comando
 npm run acc_test
 ```
 
-## 4.5. Instalando Cypress e integrando ele com o Cucumber
+## 4.5. Instalando Cypress e integrando ele com o Cucumber (Testes de Aceitação Web Automatizados)
 
 O Cypress é uma engine de execução de testes End-to-End (ou seja, testes de sistema ou aceitação) para aplicações web. Ele permite a programação do acesso aos elementos do HTML e automatiza sua exeução, sendo possível visualizar os testes em execução e registrando o seu histórico. É uma ferramenta muito útil e atualmente tem se mostrado mais fácil de usar e com um suporte melhor que o Selenium (ferramenta similar com o mesmo propósito). Contudo, a escrita dos cenários de teste usando o Gherkin e o uso do Cucumber para ligá-los aos testes automatizados ainda se faz necessária. O Cypress servirá como engine para execução dos testes no browser, não servido como especificação de alto nível destes.
 
@@ -200,7 +201,7 @@ npx cypress run
 
 Para integrar o Cypress e cucumber algunas alterações são necessárias:
 
-Adicione a seguinte configração ao package.json do projeto. 
+Adicione a seguinte configuração ao package.json do projeto. 
 
 ```JSON
 "cypress-cucumber-preprocessor": {
@@ -235,3 +236,44 @@ O comando de script `acc_test` definido no `packege.json` anteriormente também 
 Para maiores informações sobre o Cypress recorra a [documentação dele](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell). Para informações sobre o plugin de integração do cypress com cucumber a documentação pode ser encontrada [aqui](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor).
 
 
+## 4.6. Layout e Responsividade
+
+Hoje em dia é comum termos que desenvolver aplicações web para diversas resoluções de telas e dispositivos. Isto é resolvido nativamente nas tecnologias web pela característica de responsividade, ou seja, a aplicação ela se ajusta dependendo do tamanho do display. Podemos implementar a responsividade através de [Media Query](https://www.w3schools.com/css/css_rwd_mediaqueries.asp) diretamente no CSS, mas isto costuma dar bastante trabalho sendo desaconcelhavel. 
+
+Como existem conjuntos de componentes web já responsivos é comum começarmos o desenvolvimento pela seleção de um conjunto destes componentes para estilizar e dar responsividade a aplicação, acelerando assim o desenvolvimento. Os conjuntos de componentes mais comuns encontrados em aplicações web são listados abaixo. Você pode [comparar a popularidade deles no google trends](https://trends.google.com.br/trends/explore?geo=BR&q=Bootstrap,Material%20Design).
+
+- [Bootstrap](https://getbootstrap.com/) (feito pelo Twitter)
+- [Material Design](https://material.io/) (feito pelo Google)
+
+Estes componentes podem ser utilizados diretamente importanto o seu CSS e javascript no HTML e utilizando algumas referências a classes e eventos. Contudo, veremos na próxima seção que a abordagem de empacotamento deles em componentes ECMAScript é mais simples e prático de trabalhar. 
+
+## 4.7 Trabalhando com Componentes em Javascript
+
+### 4.1 Introdução - Entendendo o cenário e escolhendo um famework/biblioteca
+Componentes são elementos independetes que visam encancapsular alguma parte do software, provendo uma interface externa aos seus consumidores e escondendo todo o restante no seu interior. Um dos principais objetivos de componentização em software é o reuso dos componentes, seja em diversas partes da mesma aplicação ou entre aplicações. Botões, tabelas, menus, entre outros elementos comumente encontrados em front-end de aplicações web são casos típicos de componentes, onde queremos adicionar comportamento a eles, provendo uma implementação e externalizando somente o que for necessário.
+
+Você pode construir sua própria infraestrutura para encapsular componentes na sua aplicação. O elemento clássico para fazer isto são Classes e objetos. Contudo, [Javascript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript) (padronizado como ECMAScript) em suas versões mais antigas suportadas (versão 5.1) não possuem classes e objetos, mas somente funções. Tais versões são as suportadas normalmente pelos Browsers de internet. Conduto a especificação do ECMAScript evoluiu bastante desde sua versão 6 (ECMAScript 6 ou ECMAScript 2015) adicionando elementos como Classes a linguagem. Isto fez com que o Javascript entrasse oficialmente para o paradigma orientado a objeto, dando novos rumos a linguage, incluindo facilitando a sua adoção por desenvolvedores que conhecem componentização e sabem o seu valor. Atualmente o ECMASCript tem lançado versões novas anualmente, contudo a mais emblemática foi a versão 6 por incluir uma série de recursos não existentes anteriormente na linguagem, sendo a versão atualmente mais adotada.
+
+Como alguns browsers aceitam o ECMScript6 nativamente (é o caso do Google Chrome) e outros não, a solução encontrada por muitos desenvolvedores para programar orientado a objeto e executar seu código no navegador é a Compilação (alguns falam Transpilação apesar da [diferença ser pequena](https://www.stevefenton.co.uk/2012/11/compiling-vs-transpiling/)) do código de ECMAScript6+ para ECMAScript 5.1. Existem algumas ferramentas que fazem isto no mercado, sendo a mais conhecida o [Babel](https://babeljs.io/). 
+
+Agora que sabemos as questões envolvidas com Componentes em ES6 (ECMAScript 6), vamos as ferramentas que nos ajudam a gerenciá-los. Existem diversos frameworks e bibliotecas Javascript para este propósito. Listo abaixo as mais conhecidas. Vocês podem acompanhar [a popularidade delas no google trends](https://trends.google.com.br/trends/explore?geo=BR&q=angular,react,vue,backbone,ember). Atualmente a mais popular é o React, sendo a que vou adotar daqui em diante.
+
+- [React](https://pt-br.reactjs.org/) (feito pelo Facebook).
+- [Angular](https://angular.io/) (feito pelo Google).
+- [Vue.js](https://vuejs.org/)
+
+Menção horosa para o [Backbone](https://backbonejs.org/) e [Ember](https://emberjs.com/).
+
+Reparem todos estes frameworks são para desenvolvimento Web-first, ou seja, priorizando o desenvolvimento web como base e utilizando empacotamento deles para dispositivos móveis (aplicativo baseado em webview - como se fosse um browser encapsulado em um aplicativo). Isto resolve bem na maior parte das vezes quando não é necessária muita performance de renderização ou muito intensivo de funções nativas mobile. Se você precisa deste tipo de desenvolvimento, onde o foco principal é o aplicativo nativo, e não a web, você pode preferir utilizar frameworks que focam nisto (native) como o [React Native](https://reactnative.dev/) e o [Flutter](https://flutter.dev/). Devo alertá-los que o desenvolvimento nestas plataformas foca muito em mobile, utilizando os componentes mobile como abstração principal e não os web como HTML, CSS e JS. A compilação deles para web não costuma ser o foco e pode gerar problemas (eu testei o React Native e não ficou legal, o Flutter não testei e não tenho como afirmar). A questão aqui é que utilizando estes frameworks (onde o foco principal é o mobile) você pode precisar ter dois códigos para a mesma aplicação, um web e outro mobile. O que é muito ruim, dobrando o esforço de desenvolvimento e manutenção do software no front-end. Utilizando os frameworks web com encapsulamento para mobile seu código será único (sem duplicação). Como o foco aqui é Web seguiremos com o React e mostraremos como encapsulá-lo para mobile posteriormente. 
+
+### 4.2 Instalando e configurando o React
+
+
+
+## 4.8 Empacotando e distribuindo
+
+## 4.9 Testes de Unidade
+
+## 4.10 Testes de Integração
+
+## 4.11 Tipagem Estática
