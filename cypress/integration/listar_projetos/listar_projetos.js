@@ -15,17 +15,17 @@ Then('os projetos são exibidos', function () {
     for(let i in this.projetos){
         
         cy.get("#projetos")
-            .find('tr').eq(i)
+            .find('tbody tr').eq(i)
             .contains('td:first', this.projetos[i].Projeto)
             .should('be.visible')
             
             cy.get("#projetos")
-            .find('tr').eq(i).find('td').eq(1)
+            .find('tbody tr').eq(i).find('td').eq(1)
             .should('contain', `${this.projetos[i].Unidade} ${this.projetos[i].UnAtual}/${this.projetos[i].UnTotal} IDC ${this.projetos[i].IDC} IDP ${this.projetos[i].IDP}`)
             .should('be.visible')
             
             cy.get("#projetos")
-            .find('tr').eq(i).find('td').eq(2)
+            .find('tbody tr').eq(i).find('td').eq(2)
             .should('contain', 'X')
             .should('be.visible')
     }
