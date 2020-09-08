@@ -301,7 +301,7 @@ A necessidade de termos um SPA para aplicações que serão encapsuladas para mo
 
 A maineira mais fácil de encapsular uma aplicação web para distribuição hoje em dia é construir uma [Progressive Web App (PWA)](https://web.dev/what-are-pwas/). As PWAs são aplicações web com capacidade de processamento de eventos em background, cache offline, push notifications, entre outras coisas. Elas visam utilizar as [APIs disponíveis no navegador](https://whatwebcando.today/) no lugar de funcionalidades nativas mobile, proporcionando assim uma experiência mobile encapsulada em um navegador. A diferença disto para um app encapsulado em WebView é que o WebView tem menos capacidades (APIs) do que um navegador completo. Se o desenvolvedor seguir os manuais de desenvolvimento, [provendo os recursos necessários para a aplicação ser reconhecida como uma PWA](https://web.dev/install-criteria/), o próprio navegador oferece a instalação do app quando ele é acessado. Além disto, utilizando [Trusted Web Activities](https://developers.google.com/web/android/trusted-web-activity) (TWA - Chrome dentro de um App Android) você consegue acesso total as APIs web suportadas pelo chrome em um app android. Permitindo o deploy de todas as funcionalidades do chorme dentro de um app na Play Store. Se você quiser trabalhar com iOS o PWA roda dentro do Safari, contudo o deploy na Apple Store pode ser mais complicado. 
 
-Vamos adotar no curso a abordagem de PWA. Para tornar uma aplicação React um PWA é bem simples. Basta trocar no `index.js` a linha `serviceWorker.unregister()` para `serviceWorker.register()`. Lembrando, que segundo as instruções do React para PWA a aplicação somente funciona como PWS no modo de produção e vem com o cache offline desabilitado como padrão. Mesmo assim, fazendo a mudança acima e rodando os comandos abaixo você poderá ver sua aplicação no navegador e ele exibirá o botão de instalação. 
+Vamos adotar no curso a abordagem de PWA. Para tornar uma aplicação React um PWA é bem simples. Basta trocar no `index.js` a linha `serviceWorker.unregister()` para `serviceWorker.register()`. Lembrando, que [segundo as instruções do React para PWA](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) a aplicação somente funciona como PWA no modo de produção e vem com o cache offline desabilitado como padrão. Mesmo assim, fazendo a mudança acima e rodando os comandos abaixo você poderá ver sua aplicação no navegador e ele exibirá o botão de instalação. 
 
 Instale o servidor local chamado serve
 ```bash
@@ -324,7 +324,7 @@ As ferramentas mais comuns para aplicações híbridas são:
 
 - [Cordova](https://cordova.apache.org/) (Apache - open source - Javascript)
 - [PhoneGap](https://phonegap.com/) (Baseado no Cordova - Adobe - Descontinuado)
-- [Ionic](https://ionicframework.com/) (Baseado no Cordova - Javascript) e [Capacitor](https://capacitorjs.com/) (próprio da Ionic - baseado em Android Studio e Xcode).
+- [Ionic](https://ionicframework.com/) (Baseado no Cordova - Javascript) e [Capacitor](https://capacitorjs.com/) (próprio da Ionic - baseado em Android Studio e Xcode - você precisa ter eles instalados).
 - [Xamarin](https://dotnet.microsoft.com/apps/xamarin) - (Microsoft - C#)
 - [Flutter](https://flutter.dev/) (Google - Dart)
 - [React Native](https://reactnative.dev/) (Facebook - Javascript)
