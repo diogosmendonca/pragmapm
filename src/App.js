@@ -11,19 +11,19 @@ function App() {
       <table id="projetos" border="1">
         <tbody>
           <tr>
-            <td><a href="#">Projeto X</a></td>
+            <td><button>Projeto X</button></td>
             <td>Semana 2/4 IDC 0.8 IDP 0.9</td>
-            <td><a href="#">X</a></td>
+            <td><button>X</button></td>
           </tr>
           <tr>
-            <td><a href="#">Projeto Y</a></td>
+            <td><button>Projeto Y</button></td>
             <td>Mês 4/6 IDC 1.3 IDP 1.0</td>
-            <td><a href="#">X</a></td>
+            <td><button>X</button></td>
           </tr>
           <tr>
-            <td><a href="#">Projeto Z</a></td>
+            <td><button>Projeto Z</button></td>
             <td>Semana 3/10 IDC 1.0 IDP 1.0</td>
-            <td><a href="#">X</a></td>
+            <td><button>X</button></td>
           </tr>
         </tbody>
       </table>
