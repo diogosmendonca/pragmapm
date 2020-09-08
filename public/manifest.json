@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "PragmaPM",
+  "name": "Pragmatic Project Management",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,14 +8,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "android-chrome-96x96.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "96x96"
     },
     {
-      "src": "logo512.png",
+      "src": "mstile-150x150.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "150x150"
     }
   ],
   "start_url": ".",
