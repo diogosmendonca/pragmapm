@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 import Projeto from '../../models/Projeto';
+
 
 const TabelaProjetos = (props) => {
     return(
@@ -36,12 +38,6 @@ class ListagemProjetos extends Component {
         this.handleClickExcluirProjeto = this.handleClickExcluirProjeto.bind(this);
     }
 
-    handleClickNovoProjeto(){
-        let projetos = this.state.projetos.slice();
-        projetos.push(new Projeto('Novo Projeto', 'Semana', 3, 10, 1.0, 1.0));
-        this.setState({projetos: projetos});
-    }
-     
     handleClickExcluirProjeto(nome){
         let projetos = this.state.projetos.slice();
         projetos = projetos.filter((value) => value.nome !== nome);
@@ -53,7 +49,7 @@ class ListagemProjetos extends Component {
             <>
                 <div id="lbl_titulo_pagina">Listagem de Projetos</div>
                 <br/>
-                <button id="Novo Projeto" name="btn_novo_projeto" onClick={() => this.handleClickNovoProjeto()}>Novo Projeto</button>
+                <Link to='/projetos/novo'><button id="Novo Projeto" name="btn_novo_projeto" >Novo Projeto</button></Link>
                 <br/><br/>
                 <TabelaProjetos projetos={this.state.projetos} onClickExcluirProjeto={this.handleClickExcluirProjeto} />
             </>
