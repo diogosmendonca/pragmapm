@@ -1,25 +1,26 @@
 import React, {Component} from 'react';
 import Projeto from '../../models/Projeto';
 
+const TabelaProjetos = (props) => {
+    return(
+        <table id="projetos" border="1">
+            <tbody>
+                {props.projetos.map((projeto) => <LinhaProjeto projeto={projeto} onClickExcluirProjeto={props.onClickExcluirProjeto} />)}
+            </tbody>
+        </table>
+    );
+}
+
 const LinhaProjeto = (props) => {
     return(
         <tr>
             <td><button>{props.projeto.nome}</button></td>
             <td>{props.projeto.unidade} {props.projeto.unidadeAtual}/{props.projeto.unidadesTotais} IDC {props.projeto.idc.toFixed(1)} IDP {props.projeto.idp.toFixed(1)}</td>
-            <td><button>X</button></td>
+            <td><button onClick={() => props.onClickExcluirProjeto(props.projeto.nome)}>X</button></td>
         </tr>
     );
 }
 
-const TabelaProjetos = (props) => {
-    return(
-        <table id="projetos" border="1">
-            <tbody>
-                {props.projetos.map((projeto) => <LinhaProjeto projeto={projeto} />)}
-            </tbody>
-        </table>
-    );
-}
 
 class ListagemProjetos extends Component {
 
@@ -32,6 +33,19 @@ class ListagemProjetos extends Component {
                 new Projeto('Projeto Z', 'Semana', 3, 10, 1.0, 1.0)
             ]
         }
+        this.handleClickExcluirProjeto = this.handleClickExcluirProjeto.bind(this);
+    }
+
+    handleClickNovoProjeto(){
+        let projetos = this.state.projetos.slice();
+        projetos.push(new Projeto('Novo Projeto', 'Semana', 3, 10, 1.0, 1.0));
+        this.setState({projetos: projetos});
+    }
+     
+    handleClickExcluirProjeto(nome){
+        let projetos = this.state.projetos.slice();
+        projetos = projetos.filter((value) => value.nome !== nome);
+        this.setState({projetos: projetos});
     }
 
     render(){
@@ -39,14 +53,12 @@ class ListagemProjetos extends Component {
             <>
                 <div id="lbl_titulo_pagina">Listagem de Projetos</div>
                 <br/>
-                <button id="Novo Projeto" name="btn_novo_projeto">Novo Projeto</button>
+                <button id="Novo Projeto" name="btn_novo_projeto" onClick={() => this.handleClickNovoProjeto()}>Novo Projeto</button>
                 <br/><br/>
-                <TabelaProjetos projetos={this.state.projetos} />
+                <TabelaProjetos projetos={this.state.projetos} onClickExcluirProjeto={this.handleClickExcluirProjeto} />
             </>
         );
     }
 }
-
-
 
 export {ListagemProjetos};
