@@ -26,9 +26,9 @@ function LinhaProjeto(props){
 function ListagemProjetos (props){
 
     const [projetos, setProjetos] = useState(
-            [new Projeto('Projeto X', 'Semana', 2, 4, 0.8, 0.9),
-             new Projeto('Projeto Y', 'Mês', 4, 6, 1.3, 1.0),
-             new Projeto('Projeto Z', 'Semana', 3, 10, 1.0, 1.0)]);
+            [new Projeto({nome: 'Projeto X', unidade: 'Semana', unidadeAtual: 2, unidadesTotais: 4, idc: 0.8, idp: 0.9}),
+             new Projeto({nome: 'Projeto Y', unidade: 'Mês', unidadeAtual: 4, unidadesTotais: 6, idc: 1.3, idp: 1.0}),
+             new Projeto({nome: 'Projeto Z', unidade: 'Semana', unidadeAtual: 3, unidadesTotais: 10, idc: 1.0, idp: 1.0})]);
     
     function handleClickExcluirProjeto(nome){
         setProjetos(projetos.filter((value) => value.nome !== nome));
