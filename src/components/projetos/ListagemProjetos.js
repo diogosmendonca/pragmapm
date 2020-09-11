@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import Projeto from '../../models/Projeto';
 
 
-const TabelaProjetos = (props) => {
+function TabelaProjetos(props){
     return(
         <table id="projetos" border="1">
             <tbody>
@@ -13,7 +13,7 @@ const TabelaProjetos = (props) => {
     );
 }
 
-const LinhaProjeto = (props) => {
+function LinhaProjeto(props){
     return(
         <tr>
             <td><button>{props.projeto.nome}</button></td>
@@ -23,38 +23,29 @@ const LinhaProjeto = (props) => {
     );
 }
 
+function ListagemProjetos (props){
 
-class ListagemProjetos extends Component {
-
-    constructor(props){
-        super(props);
-        this.state = {
-            projetos: [
-                new Projeto('Projeto X', 'Semana', 2, 4, 0.8, 0.9),
-                new Projeto('Projeto Y', 'Mês', 4, 6, 1.3, 1.0),
-                new Projeto('Projeto Z', 'Semana', 3, 10, 1.0, 1.0)
-            ]
-        }
-        this.handleClickExcluirProjeto = this.handleClickExcluirProjeto.bind(this);
+    const [projetos, setProjetos] = useState(
+            [new Projeto('Projeto X', 'Semana', 2, 4, 0.8, 0.9),
+             new Projeto('Projeto Y', 'Mês', 4, 6, 1.3, 1.0),
+             new Projeto('Projeto Z', 'Semana', 3, 10, 1.0, 1.0)]);
+    
+    function handleClickExcluirProjeto(nome){
+        setProjetos(projetos.filter((value) => value.nome !== nome));
     }
 
-    handleClickExcluirProjeto(nome){
-        let projetos = this.state.projetos.slice();
-        projetos = projetos.filter((value) => value.nome !== nome);
-        this.setState({projetos: projetos});
-    }
-
-    render(){
-        return (
-            <>
-                <div id="lbl_titulo_pagina">Listagem de Projetos</div>
-                <br/>
-                <Link to='/projetos/novo'><button id="Novo Projeto" name="btn_novo_projeto" >Novo Projeto</button></Link>
-                <br/><br/>
-                <TabelaProjetos projetos={this.state.projetos} onClickExcluirProjeto={this.handleClickExcluirProjeto} />
-            </>
-        );
-    }
+    return (
+        <>
+            <div id="lbl_titulo_pagina">Listagem de Projetos</div>
+            <br/>
+            <Link to='/projetos/novo'>
+                <button id="Novo Projeto" name="btn_novo_projeto" >Novo Projeto</button>
+            </Link>
+            <br/><br/>
+            <TabelaProjetos projetos={projetos}
+                            onClickExcluirProjeto={handleClickExcluirProjeto} />
+        </>
+    );
 }
 
 export {ListagemProjetos};
