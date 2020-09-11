@@ -1,17 +1,22 @@
 import React, {useState} from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import Projeto from '../../models/Projeto';
 
 function FormProjeto(props) {
-    
-  const [projeto, setProjeto] = useState(new Projeto({}));
+  let { nome } = useParams();
+  const [projeto, setProjeto] = useState(nome ? props.projetos.filter((value) => value.nome === nome)[0] ?? new Projeto({}): new Projeto({}));
+  const history = useHistory();
 
   function handleInputChange(e) {
     setProjeto(new Projeto({...projeto, [e.target.name]: e.target.value}));
   }
 
   function handleSubmit(event){
-    alert('values: ' + JSON.stringify(projeto));
     event.preventDefault();
+    let projetos = props.projetos.filter((value) => value.nome !== nome);
+    projetos.push(projeto)
+    props.setProjetos([...projetos])
+    history.push('/projetos');
   }
 
   return (
@@ -41,7 +46,7 @@ function FormProjeto(props) {
         <input type="text" name="idp" value={projeto.idp} onChange={handleInputChange} />
       </label><br/>
       <input type="submit" value="Enviar" />
-      <button>Cancelar</button>
+      <input type="button" value="Cancelar" onClick={()=>history.goBack()}/>
     </form>
   );
     
