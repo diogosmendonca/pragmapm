@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import Projeto from '../../models/Projeto';
 
@@ -18,6 +18,11 @@ function FormProjeto(props) {
     props.setProjetos([...projetos])
     history.push('/projetos');
   }
+
+  useEffect(() =>  {
+    document.title = `Projeto: ${projeto.nome}`;
+    return () => {document.title = 'PragmaPM'}
+  }, [projeto.nome]);
 
   return (
     <form onSubmit={handleSubmit} >
