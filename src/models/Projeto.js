@@ -1,5 +1,6 @@
 
 const defaults = {
+    id: 0,
     nome: '',
     unidade: '',
     unidadeAtual: 0,
@@ -10,6 +11,7 @@ const defaults = {
 export default class Projeto{
 
     constructor(obj){
+        this.id = obj.id || defaults.id;
         this.nome = obj.nome || defaults.nome;
         this.unidade = obj.unidade || defaults.unidade;
         this.unidadeAtual = obj.unidadeAtual || defaults.unidadeAtual;

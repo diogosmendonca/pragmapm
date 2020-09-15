@@ -5,7 +5,7 @@ function TabelaProjetos(props){
     return(
         <table id="projetos" border="1">
             <tbody>
-                {props.projetos.map((projeto) => <LinhaProjeto key={projeto.nome} projeto={projeto} onClickExcluirProjeto={props.onClickExcluirProjeto} />)}
+                {props.projetos.map((projeto) => <LinhaProjeto key={projeto.id} projeto={projeto} onClickExcluirProjeto={props.onClickExcluirProjeto} />)}
             </tbody>
         </table>
     );
@@ -14,17 +14,17 @@ function TabelaProjetos(props){
 function LinhaProjeto(props){
     return(
         <tr>
-            <td><Link to={`/projetos/${props.projeto.nome}`}><button>{props.projeto.nome}</button></Link></td>
+            <td><Link to={`/projetos/${props.projeto.id}`}><button>{props.projeto.nome}</button></Link></td>
             <td>{props.projeto.unidade} {props.projeto.unidadeAtual}/{props.projeto.unidadesTotais} IDC {props.projeto.idc.toFixed(1)} IDP {props.projeto.idp.toFixed(1)}</td>
-            <td><button onClick={() => props.onClickExcluirProjeto(props.projeto.nome)}>X</button></td>
+            <td><button onClick={() => props.onClickExcluirProjeto(props.projeto.id)}>X</button></td>
         </tr>
     );
 }
 
 function ListagemProjetos (props){
     
-    function handleClickExcluirProjeto(nome){
-        props.setProjetos(props.projetos.filter((value) => value.nome !== nome));
+    function handleClickExcluirProjeto(id){
+        props.dispatch({type: 'delete_project', payload: id})
     }
 
     return (

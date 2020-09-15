@@ -3,19 +3,30 @@ import { useParams, useHistory } from "react-router-dom";
 import Projeto from '../../models/Projeto';
 
 function FormProjeto(props) {
-  let { nome } = useParams();
-  const [projeto, setProjeto] = useState(nome ? props.projetos.filter((value) => value.nome === nome)[0] ?? new Projeto({}): new Projeto({}));
+  let { id } = useParams();
+  id = parseInt(id);
+
+  const [projeto, setProjeto] = useState(
+    id ? 
+        props.projetos.filter((p) => p.id === id)[0] ?? new Projeto({})
+       : new Projeto({}));
+  
+  const [actionType, ] = useState(
+    id ? 
+      props.projetos.filter((p) => p.id === id)[0] 
+            ? 'update_project'
+            : 'add_project'
+         : 'add_project');
   const history = useHistory();
 
+  
   function handleInputChange(e) {
     setProjeto(new Projeto({...projeto, [e.target.name]: e.target.value}));
   }
 
   function handleSubmit(event){
     event.preventDefault();
-    let projetos = props.projetos.filter((value) => value.nome !== nome);
-    projetos.push(projeto)
-    props.setProjetos([...projetos])
+    props.dispatch({type: actionType, payload: projeto})
     history.push('/projetos');
   }
 
