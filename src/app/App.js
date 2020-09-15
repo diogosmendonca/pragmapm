@@ -8,12 +8,13 @@ import {
 import './App.css';
 import {ListagemProjetos} from '../projetos/ListagemProjetos'
 import {FormProjeto} from '../projetos/FormProjeto'
-import Projeto from '../../models/Projeto';
+import Projeto from '../projetos/Projeto';
 
 const initialProjects =
     [new Projeto({id: 1, nome: 'Projeto X', unidade: 'Semana', unidadeAtual: 2, unidadesTotais: 4, idc: 0.8, idp: 0.9}),
      new Projeto({id: 2, nome: 'Projeto Y', unidade: 'Mês', unidadeAtual: 4, unidadesTotais: 6, idc: 1.3, idp: 1.0}),
      new Projeto({id: 3, nome: 'Projeto Z', unidade: 'Semana', unidadeAtual: 3, unidadesTotais: 10, idc: 1.0, idp: 1.0})];
+     
 
 function projetosReducer(projetos /*state*/, action ){
   switch(action.type){
