@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useParams, useHistory } from "react-router-dom";
-import Projeto from '../../models/Projeto';
+import Projeto from './Projeto';
 
 function FormProjeto(props) {
   let { id } = useParams();
