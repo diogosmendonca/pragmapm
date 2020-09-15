@@ -8,7 +8,7 @@ import {
 import './App.css';
 import {ListagemProjetos} from '../projetos/ListagemProjetos'
 import {FormProjeto} from '../projetos/FormProjeto'
-import projetosReducer from '../projetos/ProjetosReducer';
+import {initialProjects, projetosReducer} from '../projetos/ProjetosReducer';
 
 function App() {
 
