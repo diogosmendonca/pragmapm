@@ -5,19 +5,12 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { configureStore } from '@reduxjs/toolkit'
+import {store} from '../store'
 import { Provider } from 'react-redux'
 import './App.css';
 import {ListagemProjetos} from '../projetos/ListagemProjetos'
 import {FormProjeto} from '../projetos/FormProjeto'
-import {projetosReducer} from '../projetos/ProjetosReducer';
 
-
-const store = configureStore({
-  reducer: {
-    projetos: projetosReducer
-  }
-})
 
 function App() {
 
