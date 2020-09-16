@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
+import {deleteProjeto} from './ProjetosSlice'
 
 function TabelaProjetos(props){
     return(
@@ -28,7 +29,7 @@ function ListagemProjetos (props){
     const dispatch = useDispatch()
 
     function handleClickExcluirProjeto(id){
-        dispatch({type: 'delete_project', payload: id})
+        dispatch(deleteProjeto(id))
     }
 
     return (

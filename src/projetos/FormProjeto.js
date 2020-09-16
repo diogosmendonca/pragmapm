@@ -18,9 +18,9 @@ function FormProjeto(props) {
   const [actionType, ] = useState(
     id ? 
       projetos.filter((p) => p.id === id)[0] 
-            ? 'update_project'
-            : 'add_project'
-         : 'add_project');
+            ? 'projetos/updateProjeto'
+            : 'projetos/addProjeto'
+         : 'projetos/addProjeto');
   const history = useHistory();
 
   
