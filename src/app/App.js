@@ -1,37 +1,46 @@
-import React, {useReducer} from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+import { configureStore } from '@reduxjs/toolkit'
+import { Provider } from 'react-redux'
 import './App.css';
 import {ListagemProjetos} from '../projetos/ListagemProjetos'
 import {FormProjeto} from '../projetos/FormProjeto'
-import {initialProjects, projetosReducer} from '../projetos/ProjetosReducer';
+import {projetosReducer} from '../projetos/ProjetosReducer';
+
+
+const store = configureStore({
+  reducer: {
+    projetos: projetosReducer
+  }
+})
 
 function App() {
 
-  const [projetos, dispatch] = useReducer(projetosReducer, initialProjects);
-
   return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/projetos/novo">Novo Projeto</Link></li>
-            <li><Link to="/projetos">Projetos</Link></li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route path="/projetos/novo" component={() => <FormProjeto projetos={projetos} dispatch={dispatch} />}></Route>
-          <Route path="/projetos/:id" component={() => <FormProjeto projetos={projetos} dispatch={dispatch}/>}></Route>
-          <Route path="/projetos" component={() => <ListagemProjetos projetos={projetos} dispatch={dispatch}/>}></Route>
-          <Route path="/" component={() => <ListagemProjetos projetos={projetos} dispatch={dispatch}/>}></Route>
-        </Switch>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/projetos/novo">Novo Projeto</Link></li>
+              <li><Link to="/projetos">Projetos</Link></li>
+            </ul>
+          </nav>
+          <Switch>
+            <Route path="/projetos/novo" component={() => <FormProjeto />}></Route>
+            <Route path="/projetos/:id" component={() => <FormProjeto />}></Route>
+            <Route path="/projetos" component={() => <ListagemProjetos />}></Route>
+            <Route path="/" component={() => <ListagemProjetos />}></Route>
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

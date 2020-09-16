@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
 
 function TabelaProjetos(props){
@@ -23,8 +24,11 @@ function LinhaProjeto(props){
 
 function ListagemProjetos (props){
     
+    const projetos = useSelector(state => state.projetos)
+    const dispatch = useDispatch()
+
     function handleClickExcluirProjeto(id){
-        props.dispatch({type: 'delete_project', payload: id})
+        dispatch({type: 'delete_project', payload: id})
     }
 
     return (
@@ -35,7 +39,7 @@ function ListagemProjetos (props){
                 <button id="Novo Projeto" name="btn_novo_projeto" >Novo Projeto</button>
             </Link>
             <br/><br/>
-            <TabelaProjetos projetos={props.projetos}
+            <TabelaProjetos projetos={projetos}
                             onClickExcluirProjeto={handleClickExcluirProjeto} />
         </>
     );

@@ -28,11 +28,11 @@ const reducerMap = {
     'delete_project': deleteProjetoReducer
 }
 
-export function projetosReducer(state, action){
+export function projetosReducer(state = initialProjects, action){
     const reducer = reducerMap[action.type];
     if(reducer){
         return reducer(state, action.payload)
     }else{
-        throw new Error();
+        return state;
     }
 }
