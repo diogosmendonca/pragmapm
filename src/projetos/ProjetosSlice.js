@@ -1,11 +1,28 @@
 import Projeto from './Projeto';
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 
+/*
 const initialProjects =
     [new Projeto({id: 1, nome: 'Projeto X', unidade: 'Semana', unidadeAtual: 2, unidadesTotais: 4, idc: 0.8, idp: 0.9}),
     new Projeto({id: 2, nome: 'Projeto Y', unidade: 'Mês', unidadeAtual: 4, unidadesTotais: 6, idc: 1.3, idp: 1.0}),
     new Projeto({id: 3, nome: 'Projeto Z', unidade: 'Semana', unidadeAtual: 3, unidadesTotais: 10, idc: 1.0, idp: 1.0})];
- 
+*/
+const initialProjects = [];
+
+
+export const fetchProjetos = createAsyncThunk('projetos/fetchProjetos', async () => {
+    try{
+        let response = await fetch('http://localhost:3004/projetos');
+        let projetos = await response.json();
+        return projetos;
+    }catch(error){        
+        return [];
+    }
+});
+
+function fullfillProjetosReducer(projetosState, projetosFetched){
+    return projetosFetched;
+}
 
 function addProjetoReducer(projetos, projeto){
     let proxId = 1 + projetos.map(p => p.id).reduce((x, y) => Math.max(x,y));
@@ -29,9 +46,12 @@ export const projetosSlice = createSlice({
         addProjeto: (state, action) => addProjetoReducer(state, action.payload),
         updateProjeto: (state, action) => updateProjetoReducer(state, action.payload),
         deleteProjeto: (state, action) => deleteProjetoReducer(state, action.payload)
+    },
+    extraReducers: {
+        [fetchProjetos.fulfilled]: (state, action) => fullfillProjetosReducer(state, action.payload)
     }
 })
 
-export const { addProjeto, updateProjeto, deleteProjeto } = projetosSlice.actions
+export const {addProjeto, updateProjeto, deleteProjeto } = projetosSlice.actions
 
 export default projetosSlice.reducer

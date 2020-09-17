@@ -5,17 +5,13 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import {store} from '../store'
-import { Provider } from 'react-redux'
 import './App.css';
 import {ListagemProjetos} from '../projetos/ListagemProjetos'
 import {FormProjeto} from '../projetos/FormProjeto'
 
 
 function App() {
-
   return (
-    <Provider store={store}>
       <Router>
         <div>
           <nav>
@@ -33,7 +29,6 @@ function App() {
           </Switch>
         </div>
       </Router>
-    </Provider>
   );
 }
 
