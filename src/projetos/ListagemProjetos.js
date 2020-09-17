@@ -1,16 +1,40 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
-import {deleteProjeto} from './ProjetosSlice'
+import {fetchProjetos, deleteProjeto} from './ProjetosSlice'
 
 function TabelaProjetos(props){
-    return(
-        <table id="projetos" border="1">
-            <tbody>
-                {props.projetos.map((projeto) => <LinhaProjeto key={projeto.id} projeto={projeto} onClickExcluirProjeto={props.onClickExcluirProjeto} />)}
-            </tbody>
-        </table>
-    );
+
+    const projetos = useSelector(state => state.projetos.projetos)
+    const status = useSelector(state => state.projetos.status)
+    const error = useSelector(state => state.projetos.error)
+    const dispatch = useDispatch()
+
+    function handleClickExcluirProjeto(id){
+        dispatch(deleteProjeto(id))
+    }
+
+    useEffect(() => {
+        if (status === 'not_loaded') {
+            dispatch(fetchProjetos())
+        }
+    }, [status, dispatch])
+
+    switch(status){
+        case 'loaded':
+            return(
+                <table id="projetos" border="1">
+                    <tbody>
+                        {projetos.map((projeto) => <LinhaProjeto key={projeto.id} projeto={projeto} onClickExcluirProjeto={handleClickExcluirProjeto} />)}
+                    </tbody>
+                </table>
+            );
+        case 'loading':
+            return (<div>Carregando...</div>);
+        case 'failed':
+        default:
+            return (<div>Erro ao carregar os projetos: {error}</div>)
+    }
 }
 
 function LinhaProjeto(props){
@@ -24,14 +48,6 @@ function LinhaProjeto(props){
 }
 
 function ListagemProjetos (props){
-    
-    const projetos = useSelector(state => state.projetos)
-    const dispatch = useDispatch()
-
-    function handleClickExcluirProjeto(id){
-        dispatch(deleteProjeto(id))
-    }
-
     return (
         <>
             <div id="lbl_titulo_pagina">Listagem de Projetos</div>
@@ -40,10 +56,10 @@ function ListagemProjetos (props){
                 <button id="Novo Projeto" name="btn_novo_projeto" >Novo Projeto</button>
             </Link>
             <br/><br/>
-            <TabelaProjetos projetos={projetos}
-                            onClickExcluirProjeto={handleClickExcluirProjeto} />
+            <TabelaProjetos />
         </>
     );
 }
+
 
 export {ListagemProjetos};

@@ -5,7 +5,7 @@ import Projeto from './Projeto';
 
 function FormProjeto(props) {
   
-  const projetos = useSelector(state => state.projetos)
+  const projetos = useSelector(state => state.projetos.projetos)
   const dispatch = useDispatch()
   let { id } = useParams();
   id = parseInt(id);
