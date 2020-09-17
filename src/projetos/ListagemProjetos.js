@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
-import {fetchProjetos, deleteProjeto} from './ProjetosSlice'
+import {fetchProjetos, deleteProjetoServer} from './ProjetosSlice'
 
 function TabelaProjetos(props){
 
@@ -11,7 +11,7 @@ function TabelaProjetos(props){
     const dispatch = useDispatch()
 
     function handleClickExcluirProjeto(id){
-        dispatch(deleteProjeto(id))
+        dispatch(deleteProjetoServer(id))
     }
 
     useEffect(() => {

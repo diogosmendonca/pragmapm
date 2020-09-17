@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import Projeto from './Projeto';
+import {addProjetoServer, updateProjetoServer} from './ProjetosSlice';
 
 function FormProjeto(props) {
   
@@ -18,9 +19,9 @@ function FormProjeto(props) {
   const [actionType, ] = useState(
     id ? 
       projetos.filter((p) => p.id === id)[0] 
-            ? 'projetos/updateProjeto'
-            : 'projetos/addProjeto'
-         : 'projetos/addProjeto');
+            ? 'projetos/updateProjetoServer'
+            : 'projetos/addProjetoServer'
+         : 'projetos/addProjetoServer');
   const history = useHistory();
 
   
@@ -30,7 +31,11 @@ function FormProjeto(props) {
 
   function handleSubmit(event){
     event.preventDefault();
-    dispatch({type: actionType, payload: projeto})
+    if(actionType === 'projetos/addProjetoServer'){
+      dispatch(addProjetoServer(projeto));
+    }else if(actionType === 'projetos/updateProjetoServer'){
+      dispatch(updateProjetoServer(projeto))
+    }
     history.push('/projetos');
   }
 
