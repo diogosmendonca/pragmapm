@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
-import {fetchProjetos, deleteProjetoServer, setStatus} from './ProjetosSlice'
+import {fetchProjetos, deleteProjetoServer, setStatus, selectAllProjetos} from './ProjetosSlice'
 
 function TabelaProjetos(props){
 
-    const projetos = useSelector(state => state.projetos.projetos)
+    const projetos = useSelector(selectAllProjetos)
     const status = useSelector(state => state.projetos.status)
     const error = useSelector(state => state.projetos.error)
     const dispatch = useDispatch()
