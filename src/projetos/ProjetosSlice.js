@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {httpDelete, httpGet, httpPut, httpPost} from '../utils'
 
 const initialState = {
     status: 'not_loaded',
@@ -7,48 +8,20 @@ const initialState = {
 };
 
 export const fetchProjetos = createAsyncThunk('projetos/fetchProjetos', async () => {
-    return await (await fetch('http://localhost:3004/projetos')).json();
+    return httpGet('http://localhost:3004/projetos');
 });
 
 export const deleteProjetoServer = createAsyncThunk('projetos/deleteProjetoServer', async (idProjeto) => {
-    let response = await fetch('http://localhost:3004/projetos/' + idProjeto, {method: 'DELETE'});
-    if(response.ok){
-        return idProjeto;
-    }else{
-        throw new Error("Erro ao excluir o projeto");
-    }
+    httpDelete(`http://localhost:3004/projetos/${idProjeto}`);
+    return idProjeto;
 });
 
 export const addProjetoServer = createAsyncThunk('projetos/addProjetoServer', async (projeto) => {
-    let response = await fetch('http://localhost:3004/projetos' , 
-                                {
-                                    method: 'POST', 
-                                    headers: {
-                                        'Content-Type': 'application/json;charset=utf-8'
-                                    },
-                                    body: JSON.stringify(projeto)
-                                });
-    if(response.ok){
-        return projeto;
-    }else{
-        throw new Error("Erro ao incluir o projeto");
-    }
+    return httpPost('http://localhost:3004/projetos', projeto);
 });
 
 export const updateProjetoServer = createAsyncThunk('projetos/updateProjetoServer', async (projeto) => {
-    let response = await fetch('http://localhost:3004/projetos/' + projeto.id , 
-                                {
-                                    method: 'PUT', 
-                                    headers: {
-                                        'Content-Type': 'application/json;charset=utf-8'
-                                    },
-                                    body: JSON.stringify(projeto)
-                                });
-    if(response.ok){
-        return projeto;
-    }else{
-        throw new Error("Erro ao atualizar o projeto");
-    }
+    return httpPut(`http://localhost:3004/projetos/${projeto.id}`, projeto);
 });
 
 function fullfillProjetosReducer(projetosState, projetosFetched){
