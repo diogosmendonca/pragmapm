@@ -7,8 +7,11 @@ import {addProjetoServer, updateProjetoServer} from './ProjetosSlice';
 function FormProjeto(props) {
   
   const projetos = useSelector(state => state.projetos.projetos)
+  const status = useSelector(state => state.projetos.status)
+  const error = useSelector(state => state.projetos.error)
   const dispatch = useDispatch()
   let { id } = useParams();
+
   id = parseInt(id);
 
   const [projeto, setProjeto] = useState(
@@ -36,8 +39,13 @@ function FormProjeto(props) {
     }else if(actionType === 'projetos/updateProjetoServer'){
       dispatch(updateProjetoServer(projeto))
     }
-    history.push('/projetos');
   }
+
+  useEffect(() =>  {
+    if(status === 'saved'){
+      history.push('/projetos');
+    }
+  }, [projeto, history, status]);
 
   useEffect(() =>  {
     document.title = `Projeto: ${projeto.nome}`;
@@ -45,6 +53,8 @@ function FormProjeto(props) {
   }, [projeto.nome]);
 
   return (
+    <>
+    <div>{error}</div>
     <form onSubmit={handleSubmit} >
       <label>
         Nome:&nbsp;
@@ -73,6 +83,7 @@ function FormProjeto(props) {
       <input type="submit" value="Enviar" />
       <input type="button" value="Cancelar" onClick={()=>history.goBack()}/>
     </form>
+  </>
   );
     
 }

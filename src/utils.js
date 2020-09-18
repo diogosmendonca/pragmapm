@@ -28,18 +28,18 @@ async function client(endpoint, { body, ...customConfig } = {}) {
     }
   }
   
-  export const httpGet = function (endpoint, customConfig = {}) {
+  export const httpGet = async function (endpoint, customConfig = {}) {
     return client(endpoint, { ...customConfig, method: 'GET' })
   }
   
-  export const httpPost = function (endpoint, body, customConfig = {}) {
+  export const httpPost = async function (endpoint, body, customConfig = {}) {
     return client(endpoint, {body, ...customConfig, method: 'POST'})
   }
 
-  export const httpPut = function (endpoint, body, customConfig = {}) {
+  export const httpPut = async function (endpoint, body, customConfig = {}) {
     return client(endpoint, {body, ...customConfig, method: 'PUT'})
   }
 
-  export const httpDelete  = function (endpoint, customConfig = {}) {
+  export const httpDelete = async function (endpoint, customConfig = {}) {
     return client(endpoint, { ...customConfig, method: 'DELETE' })
   }

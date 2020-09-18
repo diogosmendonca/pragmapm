@@ -8,20 +8,20 @@ const initialState = {
 };
 
 export const fetchProjetos = createAsyncThunk('projetos/fetchProjetos', async () => {
-    return httpGet('http://localhost:3004/projetos');
+    return await httpGet('http://localhost:3004/projetos');
 });
 
 export const deleteProjetoServer = createAsyncThunk('projetos/deleteProjetoServer', async (idProjeto) => {
-    httpDelete(`http://localhost:3004/projetos/${idProjeto}`);
+    await httpDelete(`http://localhost:3004/projetos/${idProjeto}`);
     return idProjeto;
 });
 
 export const addProjetoServer = createAsyncThunk('projetos/addProjetoServer', async (projeto) => {
-    return httpPost('http://localhost:3004/projetos', projeto);
+    return await httpPost('http://localhost:3004/projetos', projeto);
 });
 
 export const updateProjetoServer = createAsyncThunk('projetos/updateProjetoServer', async (projeto) => {
-    return httpPut(`http://localhost:3004/projetos/${projeto.id}`, projeto);
+    return await httpPut(`http://localhost:3004/projetos/${projeto.id}`, projeto);
 });
 
 function fullfillProjetosReducer(projetosState, projetosFetched){
@@ -49,18 +49,22 @@ export const projetosSlice = createSlice({
     reducers: {
         addProjeto: (state, action) => addProjetoReducer(state, action.payload),
         updateProjeto: (state, action) => updateProjetoReducer(state, action.payload),
-        deleteProjeto: (state, action) => deleteProjetoReducer(state, action.payload)
+        deleteProjeto: (state, action) => deleteProjetoReducer(state, action.payload),
+        setStatus: (state, action) => {state.status = action.payload}
     },
     extraReducers: {
         [fetchProjetos.pending]: (state, action) => {state.status = 'loading'},
         [fetchProjetos.fulfilled]: (state, action) => {fullfillProjetosReducer(state, action.payload)},
-        [fetchProjetos.rejected]: (state, action) => {state.status = 'failed'; state.error = action.error.message},        
-        [deleteProjetoServer.fulfilled]: (state, action) => {deleteProjetoReducer(state, action.payload)},
-        [addProjetoServer.fulfilled]: (state, action) => {addProjetoReducer(state, action.payload)},
-        [updateProjetoServer.fulfilled]: (state, action) => {updateProjetoReducer(state, action.payload)},
+        [fetchProjetos.rejected]: (state, action) => {state.status = 'failed'; state.error = 'Falha ao buscar projetos: ' + action.error.message},        
+        [deleteProjetoServer.fulfilled]: (state, action) => {state.status = 'deleted'; deleteProjetoReducer(state, action.payload)},
+        [deleteProjetoServer.rejected]: (state, action) => {state.status = 'failed'; state.error = 'Falha ao excluir projeto: ' + action.error.message},
+        [addProjetoServer.fulfilled]: (state, action) => {state.status = 'saved'; addProjetoReducer(state, action.payload)},
+        [addProjetoServer.rejected]: (state, action) => {state.status = 'failed'; state.error = 'Falha ao adicionar projeto: ' + action.error.message},        
+        [updateProjetoServer.fulfilled]: (state, action) => {state.status = 'saved'; updateProjetoReducer(state, action.payload)},
+        [updateProjetoServer.rejected]: (state, action) => {state.status = 'failed'; state.error = 'Falha ao atualizar projeto: ' + action.error.message},
     }
 })
 
-export const {addProjeto, updateProjeto, deleteProjeto } = projetosSlice.actions
+export const {addProjeto, updateProjeto, deleteProjeto, setStatus } = projetosSlice.actions
 
 export default projetosSlice.reducer

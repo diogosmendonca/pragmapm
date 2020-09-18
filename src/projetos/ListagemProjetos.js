@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
-import {fetchProjetos, deleteProjetoServer} from './ProjetosSlice'
+import {fetchProjetos, deleteProjetoServer, setStatus} from './ProjetosSlice'
 
 function TabelaProjetos(props){
 
@@ -17,11 +17,11 @@ function TabelaProjetos(props){
     useEffect(() => {
         if (status === 'not_loaded') {
             dispatch(fetchProjetos())
-        }
+        } 
     }, [status, dispatch])
 
     switch(status){
-        case 'loaded':
+        case 'loaded': case 'saved':
             return(
                 <table id="projetos" border="1">
                     <tbody>
@@ -33,7 +33,7 @@ function TabelaProjetos(props){
             return (<div>Carregando...</div>);
         case 'failed':
         default:
-            return (<div>Erro ao carregar os projetos: {error}</div>)
+            return (<div>{error}</div>)
     }
 }
 
@@ -48,8 +48,23 @@ function LinhaProjeto(props){
 }
 
 function ListagemProjetos (props){
+    const status = useSelector(state => state.projetos.status)
+    const dispatch = useDispatch()
+    var [msg, setMsg] = useState('');
+    
+    useEffect(() => {
+        if (status === 'saved'){
+            setMsg('Projeto salvo com sucesso');
+            dispatch(setStatus('loaded'));
+        }else if (status === 'deleted'){
+            setMsg('Projeto excluído com sucesso');
+            dispatch(setStatus('loaded'));
+        }
+    }, [status]);   
+
     return (
         <>
+            <div>{msg}</div>
             <div id="lbl_titulo_pagina">Listagem de Projetos</div>
             <br/>
             <Link to='/projetos/novo'>
