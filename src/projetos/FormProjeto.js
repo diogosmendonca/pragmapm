@@ -61,7 +61,10 @@ function FormProjeto(props) {
       </label><br/>
       <label>
         Unidade:&nbsp;
-        <input type="text" name="unidade" defaultValue={projetoOnLoad.unidade}  ref={register} />
+        <select name="unidade" defaultValue={projetoOnLoad.unidade} ref={register}>
+          <option value="Semana">Semana</option>
+          <option value="Mês">Mês</option>
+        </select>
         <span>{errors.unidade?.message}</span>
       </label><br/>
       <label>
