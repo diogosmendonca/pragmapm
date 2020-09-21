@@ -53,7 +53,7 @@ function FormProjeto(props) {
   return (
     <>
     <div>{error}</div>
-    <form onSubmit={handleSubmit(onSubmit)} >
+    <form onSubmit={handleSubmit(onSubmit)} novalidate="true" >
       <label>
         Nome:&nbsp;
         <input type="text" name="nome" defaultValue={projetoOnLoad.nome} ref={register}  />
@@ -66,22 +66,22 @@ function FormProjeto(props) {
       </label><br/>
       <label>
         Unidade Atual:&nbsp;
-        <input type="text" name="unidadeAtual" defaultValue={projetoOnLoad.unidadeAtual} ref={register} />
+        <input type="number" name="unidadeAtual" min="0" defaultValue={projetoOnLoad.unidadeAtual} ref={register} />
         <span>{errors.unidadeAtual?.message}</span>
       </label><br/>
       <label>
         Unidades Totais:&nbsp;
-        <input type="text" name="unidadesTotais" defaultValue={projetoOnLoad.unidadesTotais} ref={register} />
+        <input type="number" name="unidadesTotais" min="0" defaultValue={projetoOnLoad.unidadesTotais} ref={register} />
         <span>{errors.unidadesTotais?.message}</span>
       </label><br/>
       <label>
         IDC:&nbsp;
-        <input type="text" name="idc" defaultValue={projetoOnLoad.idc} ref={register} />
+        <input type="number" step="0.01" name="idc" min="0" defaultValue={projetoOnLoad.idc} ref={register} />
         <span>{errors.idc?.message}</span>
       </label><br/>
       <label>
         IDP:&nbsp;
-        <input type="text" name="idp" defaultValue={projetoOnLoad.idp} ref={register} />
+        <input type="number" step="0.01" name="idp" min="0" defaultValue={projetoOnLoad.idp} ref={register} />
         <span>{errors.idp?.message}</span>
       </label><br/>
       <input type="submit" value="Enviar" />

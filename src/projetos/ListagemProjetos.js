@@ -41,7 +41,7 @@ function LinhaProjeto(props){
     return(
         <tr>
             <td><Link to={`/projetos/${props.projeto.id}`}><button>{props.projeto.nome}</button></Link></td>
-            <td>{props.projeto.unidade} {props.projeto.unidadeAtual}/{props.projeto.unidadesTotais} IDC {props.projeto.idc.toFixed(1)} IDP {props.projeto.idp.toFixed(1)}</td>
+            <td>{props.projeto.unidade} {props.projeto.unidadeAtual}/{props.projeto.unidadesTotais} IDC {props.projeto.idc.toFixed(2)} IDP {props.projeto.idp.toFixed(2)}</td>
             <td><button onClick={() => props.onClickExcluirProjeto(props.projeto.id)}>X</button></td>
         </tr>
     );
