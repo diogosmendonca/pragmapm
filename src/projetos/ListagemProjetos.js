@@ -60,7 +60,7 @@ function ListagemProjetos (props){
             setMsg('Projeto excluído com sucesso');
             dispatch(setStatus('loaded'));
         }
-    }, [status]);   
+    }, [status, dispatch]);   
 
     return (
         <>
