@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
+import Button from '@material-ui/core/Button';
 import {fetchProjetos, deleteProjetoServer, setStatus, selectAllProjetos} from './ProjetosSlice'
 
 function TabelaProjetos(props){
@@ -67,9 +68,9 @@ function ListagemProjetos (props){
             <div>{msg}</div>
             <div id="lbl_titulo_pagina">Listagem de Projetos</div>
             <br/>
-            <Link to='/projetos/novo'>
-                <button id="Novo Projeto" name="btn_novo_projeto" >Novo Projeto</button>
-            </Link>
+            <Button id="Novo Projeto" name="btn_novo_projeto" 
+                    variant="contained" color="primary" to="/projetos/novo"
+                    component={Link} >Novo Projeto</Button>
             <br/><br/>
             <TabelaProjetos />
         </>
