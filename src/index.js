@@ -1,32 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
 import './index.css';
 import App from './app/App';
 import * as serviceWorker from './serviceWorker';
-import {store} from './store'
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import lightGreen from '@material-ui/core/colors/lightGreen';
-
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: lightGreen[500],
-    }
-  },
-});
-
 
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline />
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ThemeProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
