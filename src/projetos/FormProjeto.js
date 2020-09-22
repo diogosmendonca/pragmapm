@@ -53,7 +53,7 @@ function FormProjeto(props) {
   return (
     <>
     <div>{error}</div>
-    <form onSubmit={handleSubmit(onSubmit)} novalidate="true" >
+    <form onSubmit={handleSubmit(onSubmit)} noValidate={true} >
       <label>
         Nome:&nbsp;
         <input type="text" name="nome" defaultValue={projetoOnLoad.nome} ref={register}  />
