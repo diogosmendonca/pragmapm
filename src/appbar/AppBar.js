@@ -30,7 +30,7 @@ export default function AppBar(props){
         <div className={classes.root}>
           <MUIAppBar position="static">
             <Toolbar>
-              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <IconButton edge="start" onClick={props.toggleDrawerHandler(true)} className={classes.menuButton} color="inherit" aria-label="menu">
                 <MenuIcon />
               </IconButton>
               <Typography className={classes.title} variant="h6">PragmaPM</Typography>

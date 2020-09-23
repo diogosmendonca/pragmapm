@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import './App.css';
 import {ListagemProjetos} from '../projetos/ListagemProjetos'
@@ -21,6 +20,8 @@ import {
 } from "@material-ui/core/colors";
 import Container from '@material-ui/core/Container';
 import AppBar from '../appbar/AppBar';
+import Drawer from '../appbar/Drawer';
+
 
 function App() {
   //media query de preferência de tema
@@ -28,6 +29,8 @@ function App() {
 
   //estado de preferência do tema
   const [darkState, setDarkState] = useState(prefersDarkMode);
+  //estado do drawer
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   //escolha das cores e tipo de tema
   const palletType = darkState ? "dark" : "light";
@@ -56,22 +59,25 @@ function App() {
     setDarkState(!darkState);
   };
 
+  //handler de abrir e fechar o drawer
+  const toggleDrawerHandler = (open) => (event) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+          return;
+      }
+      setDrawerOpen(open);
+  };
+
+
   return (
     <>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Provider store={store}>
-        <AppBar handleThemeChange={handleThemeChange} darkState={darkState} />
-        <Container maxWidth="xl">
-          <Router>
+        <Router>
+          <AppBar handleThemeChange={handleThemeChange} darkState={darkState} toggleDrawerHandler={toggleDrawerHandler} />
+          <Drawer open={drawerOpen} toggleDrawerHandler={toggleDrawerHandler} />
+          <Container maxWidth="xl">
             <div>
-              <nav>
-                <ul>
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/projetos/novo">Novo Projeto</Link></li>
-                  <li><Link to="/projetos">Projetos</Link></li>
-                </ul>
-              </nav>
               <Switch>
                 <Route path="/projetos/novo" component={() => <FormProjeto />}></Route>
                 <Route path="/projetos/:id" component={() => <FormProjeto />}></Route>
@@ -79,8 +85,8 @@ function App() {
                 <Route path="/" component={() => <ListagemProjetos />}></Route>
               </Switch>
             </div>
-          </Router>
-        </Container>
+          </Container>
+        </Router>
       </Provider>
     </ThemeProvider>
     </>
