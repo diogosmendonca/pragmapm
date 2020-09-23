@@ -5,6 +5,8 @@ import {projetoSchema} from './ProjetoSchema';
 import { yupResolver } from '@hookform/resolvers';
 import { useForm } from "react-hook-form";
 import {addProjetoServer, updateProjetoServer, selectProjetosById} from './ProjetosSlice';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 function FormProjeto(props) {
   
@@ -50,9 +52,12 @@ function FormProjeto(props) {
   }, [projeto.nome]);
   */
 
+  const lblTitulo = actionType === 'projetos/updateProjetoServer'? "Alteração" : "Inclusão";
+
   return (
     <>
     <div>{error}</div>
+    <Box m={1}><Typography variant="h4"  id="lbl_titulo_pagina">{lblTitulo} de Projeto</Typography></Box>
     <form onSubmit={handleSubmit(onSubmit)} noValidate={true} >
       <label>
         Nome:&nbsp;

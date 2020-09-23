@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import {fetchProjetos, deleteProjetoServer, setStatus, selectAllProjetos} from './ProjetosSlice'
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 function TabelaProjetos(props){
 
@@ -67,8 +68,7 @@ function ListagemProjetos (props){
     return (
         <>
             <div>{msg}</div>
-            <Typography variant="h4" id="lbl_titulo_pagina">Listagem de Projetos</Typography>
-            <br/>
+            <Box m={1}><Typography variant="h4"  id="lbl_titulo_pagina">Listagem de Projetos</Typography></Box>
             <Button id="Novo Projeto" name="btn_novo_projeto" 
                     variant="contained" color="primary" to="/projetos/novo"
                     component={Link} >Novo Projeto</Button>
