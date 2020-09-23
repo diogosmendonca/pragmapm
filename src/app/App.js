@@ -11,7 +11,7 @@ import {FormProjeto} from '../projetos/FormProjeto'
 import { Provider } from 'react-redux'
 import {store} from '../store'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme, responsiveFontSizes  } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   orange,
@@ -19,8 +19,8 @@ import {
   deepPurple,
   deepOrange
 } from "@material-ui/core/colors";
-import SwitchButton from "@material-ui/core/Switch";
-
+import Container from '@material-ui/core/Container';
+import AppBar from '../appbar/AppBar';
 
 function App() {
   //media query de preferência de tema
@@ -35,7 +35,7 @@ function App() {
   const mainSecondaryColor = darkState ? deepOrange[900] : deepPurple[500];
 
   //cria e memoiza o tema
-  const theme = React.useMemo(() => createMuiTheme({
+  const theme = React.useMemo(() => responsiveFontSizes(createMuiTheme({
     palette: {
       type: palletType,
       primary: {
@@ -43,9 +43,10 @@ function App() {
       },
       secondary: {
         main: mainSecondaryColor
-      }
+      },
     }
-  }), [palletType, mainPrimaryColor, mainSecondaryColor]);
+  })), [palletType, mainPrimaryColor, mainSecondaryColor]);
+
 
   //seleciona o modo segundo a preferência do usuário
   useEffect(() => setDarkState(prefersDarkMode), [prefersDarkMode]);
@@ -60,24 +61,26 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Provider store={store}>
-        <Router>
-          <div>
-            Dark Mode <SwitchButton checked={darkState} onChange={handleThemeChange} />
-            <nav>
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/projetos/novo">Novo Projeto</Link></li>
-                <li><Link to="/projetos">Projetos</Link></li>
-              </ul>
-            </nav>
-            <Switch>
-              <Route path="/projetos/novo" component={() => <FormProjeto />}></Route>
-              <Route path="/projetos/:id" component={() => <FormProjeto />}></Route>
-              <Route path="/projetos" component={() => <ListagemProjetos />}></Route>
-              <Route path="/" component={() => <ListagemProjetos />}></Route>
-            </Switch>
-          </div>
-        </Router>
+        <AppBar handleThemeChange={handleThemeChange} darkState={darkState} />
+        <Container maxWidth="xl">
+          <Router>
+            <div>
+              <nav>
+                <ul>
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/projetos/novo">Novo Projeto</Link></li>
+                  <li><Link to="/projetos">Projetos</Link></li>
+                </ul>
+              </nav>
+              <Switch>
+                <Route path="/projetos/novo" component={() => <FormProjeto />}></Route>
+                <Route path="/projetos/:id" component={() => <FormProjeto />}></Route>
+                <Route path="/projetos" component={() => <ListagemProjetos />}></Route>
+                <Route path="/" component={() => <ListagemProjetos />}></Route>
+              </Switch>
+            </div>
+          </Router>
+        </Container>
       </Provider>
     </ThemeProvider>
     </>
