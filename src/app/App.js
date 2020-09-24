@@ -61,7 +61,7 @@ function App() {
 
   //handler de abrir e fechar o drawer
   const toggleDrawerHandler = (open) => (event) => {
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      if (event?.type === 'keydown' && (event?.key === 'Tab' || event?.key === 'Shift')) {
           return;
       }
       setDrawerOpen(open);

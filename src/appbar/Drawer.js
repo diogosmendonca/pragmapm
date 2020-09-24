@@ -1,5 +1,5 @@
 import React from 'react';
-import MUIDrawer from '@material-ui/core/Drawer';
+import MUIDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -15,6 +15,7 @@ export default function Drawer(props){
     
     return(
         <MUIDrawer anchor="left" open={props.open} 
+            onOpen={props.toggleDrawerHandler(true)} 
             onClose={props.toggleDrawerHandler(false)} >
             <Box width={250}>
                 <List>
