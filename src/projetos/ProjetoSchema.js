@@ -19,3 +19,27 @@ export let projetoSchema = object().shape(
     }
 )
 
+
+export function getStatusProjeto(idc, idp){
+    let margem = 0.2;
+
+    let limiteInferior = 1 - margem;
+    let limiteInferior2 = 1 - margem * 2;
+    let status = 'ok';
+
+    if(idc < limiteInferior || idp < limiteInferior){
+        status = 'risco';
+    }
+    
+    if(idc < limiteInferior && idp < limiteInferior){
+        status = 'atrasado'
+    }
+
+    if(idc < limiteInferior2 || idp < limiteInferior2){
+        status = 'atrasado';
+    }
+
+    return status;
+}
+
+
