@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk, createEntityAdapter} from '@reduxjs/toolkit'
 import {httpDelete, httpGet, httpPut, httpPost} from '../utils'
+import {baseUrl} from '../baseUrl';
 
 
 const projetosAdapter = createEntityAdapter();
@@ -10,20 +11,20 @@ const initialState = projetosAdapter.getInitialState({
 });
 
 export const fetchProjetos = createAsyncThunk('projetos/fetchProjetos', async () => {
-    return await httpGet('http://localhost:3004/projetos');
+    return await httpGet(`${baseUrl}/projetos`);
 });
 
 export const deleteProjetoServer = createAsyncThunk('projetos/deleteProjetoServer', async (idProjeto) => {
-    await httpDelete(`http://localhost:3004/projetos/${idProjeto}`);
+    await httpDelete(`${baseUrl}/projetos/${idProjeto}`);
     return idProjeto;
 });
 
 export const addProjetoServer = createAsyncThunk('projetos/addProjetoServer', async (projeto) => {
-    return await httpPost('http://localhost:3004/projetos', projeto);
+    return await httpPost(`${baseUrl}/projetos`, projeto);
 });
 
 export const updateProjetoServer = createAsyncThunk('projetos/updateProjetoServer', async (projeto) => {
-    return await httpPut(`http://localhost:3004/projetos/${projeto.id}`, projeto);
+    return await httpPut(`${baseUrl}/projetos/${projeto.id}`, projeto);
 });
 
 export const projetosSlice = createSlice({
