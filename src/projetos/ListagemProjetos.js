@@ -105,17 +105,12 @@ function ItemProjeto(props){
     );
 }
 
-function AlertDialog(props) {
-    const [open, setOpen] = useState(props.open);
-  
-    useEffect(() => {
-        setOpen(props.open);
-    }, [props.open]);
-
+function ConfirmarExclusaoProjetoDialog(props) {
+    
     return (
       <div>
         <Dialog
-          open={open}
+          open={props.open}
           onClose={props.handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
@@ -182,7 +177,7 @@ function ListagemProjetos (props){
                 </Box>
                 </Box>
             <ListaProjetos setExcluirNome={setExcluirNome} setExcluirId={setExcluirId}  />
-            <AlertDialog open={openConfirmDialog} nome={excluirNome} 
+            <ConfirmarExclusaoProjetoDialog open={openConfirmDialog} nome={excluirNome} 
                     handleConfirmar={handleConfirmarExclusao}
                     handleClose={handleCancelarExclusao}/>
         </>
