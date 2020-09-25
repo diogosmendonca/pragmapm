@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
-import Button from '@material-ui/core/Button';
 import {fetchProjetos, deleteProjetoServer, setStatus, selectAllProjetos} from './ProjetosSlice'
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -20,13 +19,14 @@ import {getStatusProjeto} from './ProjetoSchema';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { yellow, green, red, grey } from '@material-ui/core/colors';
+import Button from '@material-ui/core/Button';
+
 
 
 function ListaProjetos(props){
 
     const projetos = useSelector(selectAllProjetos)
-    const status = useSelector(state => state.projetos.status)
-    const error = useSelector(state => state.projetos.error)
+    const status = useSelector(state => state.projetos.status)    
     const dispatch = useDispatch()
 
     function handleClickExcluirProjeto(id){
@@ -51,7 +51,7 @@ function ListaProjetos(props){
             return (<div>Carregando...</div>);
         case 'failed':
         default:
-            return (<div>{error}</div>)
+            return (<div></div>)
     }
 }
 
@@ -97,24 +97,20 @@ function ItemProjeto(props){
     );
 }
 
+
+
 function ListagemProjetos (props){
     const status = useSelector(state => state.projetos.status)
     const dispatch = useDispatch()
-    var [msg, setMsg] = useState('');
     
     useEffect(() => {
-        if (status === 'saved'){
-            setMsg('Projeto salvo com sucesso');
-            dispatch(setStatus('loaded'));
-        }else if (status === 'deleted'){
-            setMsg('Projeto excluído com sucesso');
+        if (status === 'saved' || status === 'deleted'){
             dispatch(setStatus('loaded'));
         }
     }, [status, dispatch]);   
 
     return (
-        <>
-            <div>{msg}</div>
+        <>            
             <Box display="flex" m={2}>
                 <Box flexGrow={1} m={1}><Typography variant="h5"  id="lbl_titulo_pagina">Projetos</Typography></Box>
                 <Box >
@@ -123,8 +119,7 @@ function ListagemProjetos (props){
                         component={Link} startIcon={<AddIcon />}>Novo</Button>
                 </Box>
                 </Box>
-            <ListaProjetos />
-            
+            <ListaProjetos  />
         </>
     );
 }

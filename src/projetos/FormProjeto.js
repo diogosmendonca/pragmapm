@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 function FormProjeto(props) {
   const classes = useStyles();
   const status = useSelector(state => state.projetos.status)
-  const error = useSelector(state => state.projetos.error)
   const dispatch = useDispatch()
   let { id } = useParams();
   const projetoFound = useSelector(state => selectProjetosById(state, id))
@@ -81,8 +80,7 @@ function FormProjeto(props) {
   const lblTitulo = actionType === 'projetos/updateProjetoServer'? "Alterar" : "Novo";
 
   return (
-    <>
-    <div>{error}</div>
+    <>    
     <Box m={1}><Typography variant="h5" id="lbl_titulo_pagina">{lblTitulo} Projeto</Typography></Box>
     <Box align="center">
     <form className={classes.root} onSubmit={handleSubmit(onSubmit)} noValidate={true} autoComplete="off" >
