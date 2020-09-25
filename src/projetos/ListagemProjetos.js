@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {Link} from "react-router-dom";
 import {fetchProjetos, deleteProjetoServer, setStatus, selectAllProjetos} from './ProjetosSlice'
@@ -20,7 +20,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { yellow, green, red, grey } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 function ListaProjetos(props){
@@ -29,8 +33,9 @@ function ListaProjetos(props){
     const status = useSelector(state => state.projetos.status)    
     const dispatch = useDispatch()
 
-    function handleClickExcluirProjeto(id){
-        dispatch(deleteProjetoServer(id))
+    function handleClickExcluirProjeto(id, nome){
+        props.setExcluirId(id);
+        props.setExcluirNome(nome);
     }
 
     useEffect(() => {
@@ -44,7 +49,8 @@ function ListaProjetos(props){
             return(
                 <List id="projetos">
                     <Divider />
-                    {projetos.map((projeto) => <ItemProjeto key={projeto.id} projeto={projeto} onClickExcluirProjeto={handleClickExcluirProjeto} />)}
+                    {projetos.map((projeto) => <ItemProjeto key={projeto.id} projeto={projeto} 
+                            onClickExcluirProjeto={handleClickExcluirProjeto} />)}
                 </List>
             );
         case 'loading':
@@ -86,10 +92,12 @@ function ItemProjeto(props){
             </ListItemAvatar>
             <ListItemText
                 primary={props.projeto.nome}
-                secondary={`${props.projeto.unidade} ${props.projeto.unidadeAtual}/${props.projeto.unidadesTotais} IDC ${props.projeto.idc.toFixed(2)} IDP ${props.projeto.idp.toFixed(2)}`}
+                secondary={`${props.projeto.unidade} ${props.projeto.unidadeAtual}/${props.projeto.unidadesTotais}
+                 IDC ${props.projeto.idc.toFixed(2)} IDP ${props.projeto.idp.toFixed(2)}`}
             />
             <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete" onClick={() => props.onClickExcluirProjeto(props.projeto.id)}>
+            <IconButton edge="end" aria-label="delete" 
+                onClick={() => props.onClickExcluirProjeto(props.projeto.id, props.projeto.nome)}>
                 <DeleteIcon />
             </IconButton>
             </ListItemSecondaryAction>
@@ -97,17 +105,71 @@ function ItemProjeto(props){
     );
 }
 
+function AlertDialog(props) {
+    const [open, setOpen] = useState(props.open);
+  
+    useEffect(() => {
+        setOpen(props.open);
+    }, [props.open]);
 
+    return (
+      <div>
+        <Dialog
+          open={open}
+          onClose={props.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Excluir Projeto"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Confirma a exclusão do projeto {props.nome}?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={props.handleClose} color="primary">
+              Cancelar
+            </Button>
+            <Button onClick={props.handleConfirmar} color="primary" autoFocus>
+              Confirmar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
 
 function ListagemProjetos (props){
     const status = useSelector(state => state.projetos.status)
     const dispatch = useDispatch()
+    const [excluirId, setExcluirId] = useState(0);
+    const [excluirNome, setExcluirNome] = useState('');
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     
     useEffect(() => {
         if (status === 'saved' || status === 'deleted'){
             dispatch(setStatus('loaded'));
         }
     }, [status, dispatch]);   
+
+    useEffect(() => {
+        if (excluirId != 0){
+            setOpenConfirmDialog(true);
+        }
+    }, [excluirId]);   
+
+    function handleConfirmarExclusao(){
+        //dispatch
+        dispatch(deleteProjetoServer(excluirId))
+        //close
+        setOpenConfirmDialog(false);
+    }
+
+    function handleCancelarExclusao(){
+        setExcluirId(0);
+        setOpenConfirmDialog(false);
+    }
+    
 
     return (
         <>            
@@ -119,7 +181,10 @@ function ListagemProjetos (props){
                         component={Link} startIcon={<AddIcon />}>Novo</Button>
                 </Box>
                 </Box>
-            <ListaProjetos  />
+            <ListaProjetos setExcluirNome={setExcluirNome} setExcluirId={setExcluirId}  />
+            <AlertDialog open={openConfirmDialog} nome={excluirNome} 
+                    handleConfirmar={handleConfirmarExclusao}
+                    handleClose={handleCancelarExclusao}/>
         </>
     );
 }
