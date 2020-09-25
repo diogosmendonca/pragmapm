@@ -115,7 +115,7 @@ function ListagemProjetos (props){
     return (
         <>
             <div>{msg}</div>
-            <Box m={1}><Typography variant="h6"  id="lbl_titulo_pagina">Listagem de Projetos</Typography></Box>
+            <Box m={1}><Typography variant="h6"  id="lbl_titulo_pagina">Projetos</Typography></Box>
             <Button id="Novo Projeto" name="btn_novo_projeto" 
                     variant="contained" color="primary" to="/projetos/novo"
                     component={Link} >Novo Projeto</Button>
