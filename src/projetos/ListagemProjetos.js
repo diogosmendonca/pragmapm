@@ -17,8 +17,8 @@ import SentimentSatisfiedAlt from '@material-ui/icons/SentimentSatisfiedAlt';
 import SentimentDissatisfiedOutlinedIcon from '@material-ui/icons/SentimentDissatisfiedOutlined';
 import Divider from '@material-ui/core/Divider';
 import {getStatusProjeto} from './ProjetoSchema';
-
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import { yellow, green, red, grey } from '@material-ui/core/colors';
 
 
@@ -115,12 +115,16 @@ function ListagemProjetos (props){
     return (
         <>
             <div>{msg}</div>
-            <Box m={1}><Typography variant="h6"  id="lbl_titulo_pagina">Projetos</Typography></Box>
-            <Button id="Novo Projeto" name="btn_novo_projeto" 
-                    variant="contained" color="primary" to="/projetos/novo"
-                    component={Link} >Novo Projeto</Button>
-            <br/><br/>
+            <Box display="flex" m={2}>
+                <Box flexGrow={1} m={1}><Typography variant="h5"  id="lbl_titulo_pagina">Projetos</Typography></Box>
+                <Box >
+                    <Button id="Novo Projeto" name="btn_novo_projeto" 
+                        variant="contained" color="primary" to="/projetos/novo"
+                        component={Link} startIcon={<AddIcon />}>Novo</Button>
+                </Box>
+                </Box>
             <ListaProjetos />
+            
         </>
     );
 }

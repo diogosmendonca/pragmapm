@@ -78,12 +78,12 @@ function FormProjeto(props) {
   }, [projeto.nome]);
   */
 
-  const lblTitulo = actionType === 'projetos/updateProjetoServer'? "Alteração" : "Inclusão";
+  const lblTitulo = actionType === 'projetos/updateProjetoServer'? "Alterar" : "Novo";
 
   return (
     <>
     <div>{error}</div>
-    <Box m={1}><Typography variant="h6" id="lbl_titulo_pagina">{lblTitulo} de Projeto</Typography></Box>
+    <Box m={1}><Typography variant="h5" id="lbl_titulo_pagina">{lblTitulo} Projeto</Typography></Box>
     <Box align="center">
     <form className={classes.root} onSubmit={handleSubmit(onSubmit)} noValidate={true} autoComplete="off" >
       <TextField inputRef={register} name="nome" label="Nome" required 
