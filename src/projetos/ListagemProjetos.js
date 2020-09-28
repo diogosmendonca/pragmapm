@@ -27,6 +27,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {ProjetoDialog} from './FormProjeto';
+import Backdrop from '../utils/Backdrop';
 
 
 function ListaProjetos(props){
@@ -47,7 +48,7 @@ function ListaProjetos(props){
     }, [status, dispatch])
 
     switch(status){
-        case 'loaded': case 'saved':
+        case 'loaded': case 'saved': case 'deleting': case 'saving':
             return(
                 <List id="projetos">
                     <Divider />
@@ -55,7 +56,7 @@ function ListaProjetos(props){
                             onClickExcluirProjeto={handleClickExcluirProjeto} setEditId={props.setEditId} />)}
                 </List>
             );
-        case 'loading':
+        case 'loading': 
             return (
                 <List id="projetos">
                     <Divider />
@@ -196,11 +197,11 @@ function ListagemProjetos (props){
     function handleOpenFormProjeto(idProjeto){
         setEditId(idProjeto);
         setOpenFormDialog(true);
-    };
+    }
 
     function handleCloseFormProjeto(){
         setOpenFormDialog(false);
-    };
+    }
 
     return (
         <>            
@@ -218,6 +219,7 @@ function ListagemProjetos (props){
                     handleClose={handleCancelarExclusao}/>
             <ProjetoDialog id={editId} open={openFormDialog}
                     handleOpen={handleOpenFormProjeto} handleClose={handleCloseFormProjeto} />
+            <Backdrop open={status === 'saving' || status === 'deleting'}/>
         </>
     );
 }

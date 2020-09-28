@@ -108,7 +108,7 @@ function FormProjeto(props) {
   } 
 
   useEffect(() =>  {
-    if(props.fromMenu && status === 'saved'){
+    if(props.fromMenu && status === 'saving'){
       history.push('/projetos');
     }
   }, [props.fromMenu, history, status]);

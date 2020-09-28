@@ -35,6 +35,9 @@ export const projetosSlice = createSlice({
     },
     extraReducers: {
         [fetchProjetos.pending]: (state, action) => {state.status = 'loading'},
+        [deleteProjetoServer.pending]: (state, action) => {state.status = 'deleting'},
+        [addProjetoServer.pending]: (state, action) => {state.status = 'saving'},
+        [updateProjetoServer.pending]: (state, action) => {state.status = 'saving'},
         [fetchProjetos.fulfilled]: (state, action) => {state.status = 'loaded'; projetosAdapter.setAll(state, action.payload);},
         [fetchProjetos.rejected]: (state, action) => {state.status = 'failed'; state.error = 'Falha ao buscar projetos: ' + action.error.message},        
         [deleteProjetoServer.fulfilled]: (state, action) => {state.status = 'deleted'; projetosAdapter.removeOne(state, action.payload);},
