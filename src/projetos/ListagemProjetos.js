@@ -108,7 +108,11 @@ function ItemProjeto(props){
             <ListItemAvatar>
                 { props.loading ? <Skeleton variant="circle" width={40} height={40} /> : getAvatar(getStatusProjeto(props.projeto.idc, props.projeto.idp))}
             </ListItemAvatar>
-            { props.loading ? <Box pt={0.5} flexGrow={1}><Skeleton variant="text" width="100%" height={20} /><Skeleton variant="text" width="100%" height={20} /></Box>
+            { props.loading ? 
+            <Box pt={0.5} flexGrow={1}>
+                <Skeleton variant="text" width={100} height={20} />
+                <Skeleton variant="text" width={180} height={20} />
+            </Box>
             : <ListItemText
                 primary={props.projeto.nome}
                 secondary={`${props.projeto.unidade} ${props.projeto.unidadeAtual}/${props.projeto.unidadesTotais}
