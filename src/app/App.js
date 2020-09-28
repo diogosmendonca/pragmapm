@@ -124,8 +124,8 @@ function App() {
           <Container maxWidth="xl">
             <div>
               <Switch>
-                <Route path="/projetos/novo" component={() => <FormProjeto />}></Route>
-                <Route path="/projetos/:id" component={() => <FormProjeto />}></Route>
+                <Route path="/projetos/novo" component={() => <FormProjeto fromMenu={true} />}></Route>
+                <Route path="/projetos/:id" component={() => <FormProjeto fromMenu={true} />}></Route>
                 <Route path="/projetos" component={() => <ListagemProjetos />}></Route>
                 <Route path="/" component={() => <ListagemProjetos />}></Route>
               </Switch>

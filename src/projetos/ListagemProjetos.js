@@ -26,6 +26,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Skeleton from '@material-ui/lab/Skeleton';
+import {ProjetoDialog} from './FormProjeto';
 
 
 function ListaProjetos(props){
@@ -51,7 +52,7 @@ function ListaProjetos(props){
                 <List id="projetos">
                     <Divider />
                     {projetos.map((projeto) => <ItemProjeto key={projeto.id} projeto={projeto} 
-                            onClickExcluirProjeto={handleClickExcluirProjeto} />)}
+                            onClickExcluirProjeto={handleClickExcluirProjeto} setEditId={props.setEditId} />)}
                 </List>
             );
         case 'loading':
@@ -99,8 +100,7 @@ function ItemProjeto(props){
         divider: true,
         button: true,
         id: props.projeto.id,
-        component: Link,
-        to: `/projetos/${props.projeto.id}`
+        onClick: () => props.setEditId(props.projeto.id)
     };
 
     return(
@@ -166,6 +166,8 @@ function ListagemProjetos (props){
     const [excluirId, setExcluirId] = useState(0);
     const [excluirNome, setExcluirNome] = useState('');
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+    const [openFormDialog, setOpenFormDialog] = useState(false);
+    const [editId, setEditId] = useState(0);
     
     useEffect(() => {
         if (status === 'saved' || status === 'deleted'){
@@ -190,7 +192,15 @@ function ListagemProjetos (props){
         setExcluirId(0);
         setOpenConfirmDialog(false);
     }
-    
+
+    function handleOpenFormProjeto(idProjeto){
+        setEditId(idProjeto);
+        setOpenFormDialog(true);
+    };
+
+    function handleCloseFormProjeto(){
+        setOpenFormDialog(false);
+    };
 
     return (
         <>            
@@ -198,14 +208,16 @@ function ListagemProjetos (props){
                 <Box flexGrow={1} m={1}><Typography variant="h5"  id="lbl_titulo_pagina">Projetos</Typography></Box>
                 <Box >
                     <Button id="Novo Projeto" name="btn_novo_projeto" 
-                        variant="contained" color="primary" to="/projetos/novo"
-                        component={Link} startIcon={<AddIcon />}>Novo</Button>
+                        variant="contained" color="primary" onClick={handleOpenFormProjeto} 
+                        startIcon={<AddIcon />}>Novo</Button>
                 </Box>
                 </Box>
-            <ListaProjetos setExcluirNome={setExcluirNome} setExcluirId={setExcluirId}  />
+            <ListaProjetos setExcluirNome={setExcluirNome} setExcluirId={setExcluirId} setEditId={handleOpenFormProjeto} />
             <ConfirmarExclusaoProjetoDialog open={openConfirmDialog} nome={excluirNome} 
                     handleConfirmar={handleConfirmarExclusao}
                     handleClose={handleCancelarExclusao}/>
+            <ProjetoDialog id={editId} open={openFormDialog}
+                    handleOpen={handleOpenFormProjeto} handleClose={handleCloseFormProjeto} />
         </>
     );
 }

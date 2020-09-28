@@ -14,6 +14,12 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 
 import Box from '@material-ui/core/Box';
 
@@ -31,13 +37,49 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 250,
     textAlign: 'left'
   },
+  appBar: {
+    position: 'relative',
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
 }));
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
+function ProjetoDialog(props){
+  const classes = useStyles();
+  return (
+    <div>
+      <Dialog fullScreen open={props.open} onClose={props.handleClose} TransitionComponent={Transition}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" onClick={props.handleClose} aria-label="close">
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <FormProjeto {...props} />
+      </Dialog>
+    </div>
+  );
+
+}
 
 function FormProjeto(props) {
   const classes = useStyles();
   const status = useSelector(state => state.projetos.status)
   const dispatch = useDispatch()
   let { id } = useParams();
+  id = props.id ? props.id : id;
   const projetoFound = useSelector(state => selectProjetosById(state, id))
   const { register, handleSubmit, errors, control} = useForm({
     resolver: yupResolver(projetoSchema)
@@ -61,13 +103,15 @@ function FormProjeto(props) {
     }else if(actionType === 'projetos/updateProjetoServer'){
       dispatch(updateProjetoServer({...projeto, id: projetoFound.id}))
     }
+    if(!props.fromMenu)
+        props.handleClose();
   } 
 
   useEffect(() =>  {
-    if(status === 'saved'){
+    if(props.fromMenu && status === 'saved'){
       history.push('/projetos');
     }
-  }, [history, status]);
+  }, [props.fromMenu, history, status]);
 
 
   /*
@@ -127,8 +171,11 @@ function FormProjeto(props) {
         error={errors.idp?.message ? true: false} />
       <br/><br/>
       <Button variant="contained" type="submit" color="primary">Salvar</Button>&nbsp;&nbsp;
-      <Button variant="outlined" 
-                    onClick={()=>history.goBack()} >Cancelar</Button>
+      {props.fromMenu 
+        ?
+        <Button variant="outlined" 
+                    onClick={()=>history.goBack()} >Cancelar</Button> 
+        : ""}
     </form>
     </Box>
   </>
@@ -136,4 +183,4 @@ function FormProjeto(props) {
     
 }
 
-export {FormProjeto};
+export {FormProjeto, ProjetoDialog};
