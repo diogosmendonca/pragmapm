@@ -25,6 +25,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 
 function ListaProjetos(props){
@@ -54,7 +55,12 @@ function ListaProjetos(props){
                 </List>
             );
         case 'loading':
-            return (<div>Carregando...</div>);
+            return (
+                <List id="projetos">
+                    <Divider />
+                    {[1,2,3,4,5].map((item) => <ItemProjeto loading key={item} />)}
+                </List>
+                );
         case 'failed':
         default:
             return (<div></div>)
@@ -85,21 +91,37 @@ function getAvatar(status){
 }
 
 function ItemProjeto(props){
+    let listItemProps = props.loading ? 
+    {
+        divider: true    
+    } :
+    {
+        divider: true,
+        button: true,
+        id: props.projeto.id,
+        component: Link,
+        to: `/projetos/${props.projeto.id}`
+    };
+
     return(
-        <ListItem divider button id={props.projeto.id} component={Link} to={`/projetos/${props.projeto.id}`} >
+        <ListItem {...listItemProps} >
             <ListItemAvatar>
-                {getAvatar(getStatusProjeto(props.projeto.idc, props.projeto.idp))}
+                { props.loading ? <Skeleton variant="circle" width={40} height={40} /> : getAvatar(getStatusProjeto(props.projeto.idc, props.projeto.idp))}
             </ListItemAvatar>
-            <ListItemText
+            { props.loading ? <Box pt={0.5} flexGrow={1}><Skeleton variant="text" width="100%" height={20} /><Skeleton variant="text" width="100%" height={20} /></Box>
+            : <ListItemText
                 primary={props.projeto.nome}
                 secondary={`${props.projeto.unidade} ${props.projeto.unidadeAtual}/${props.projeto.unidadesTotais}
                  IDC ${props.projeto.idc.toFixed(2)} IDP ${props.projeto.idp.toFixed(2)}`}
             />
+            }
             <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete" 
-                onClick={() => props.onClickExcluirProjeto(props.projeto.id, props.projeto.nome)}>
-                <DeleteIcon />
-            </IconButton>
+                { props.loading ? <Skeleton variant="circle" width={20} height={20} />
+                :<IconButton edge="end" aria-label="delete" 
+                    onClick={() => props.onClickExcluirProjeto(props.projeto.id, props.projeto.nome)}>
+                    <DeleteIcon />
+                </IconButton>
+                }
             </ListItemSecondaryAction>
         </ListItem>
     );
@@ -148,7 +170,7 @@ function ListagemProjetos (props){
     }, [status, dispatch]);   
 
     useEffect(() => {
-        if (excluirId != 0){
+        if (excluirId !== 0){
             setOpenConfirmDialog(true);
         }
     }, [excluirId]);   

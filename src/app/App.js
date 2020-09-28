@@ -85,6 +85,8 @@ function App() {
         setSeverity('success');
         setOpenSnackbar(true);
         break;
+      default:
+        break;
     }
   }
   , [status, error]);
