@@ -19,13 +19,6 @@ import {
 import Container from '@material-ui/core/Container';
 import AppBar from '../appbar/AppBar';
 import Drawer from '../appbar/Drawer';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import {useSelector} from 'react-redux';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 function App() {
   //media query de preferência de tema
@@ -36,15 +29,6 @@ function App() {
   //estado do drawer
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  //status das requisições
-  const status = useSelector(state => state.projetos.status)    
-  const error = useSelector(state => state.projetos.error)
-
-  //states do snackbar global de msgs
-  var [msg, setMsg] = useState('');
-  var [severity, setSeverity] = useState('');
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  
   //escolha das cores e tipo de tema
   const palletType = darkState ? "dark" : "light";
   const mainPrimaryColor = darkState ? orange[500] : lightBlue[500];
@@ -67,30 +51,6 @@ function App() {
   //seleciona o modo segundo a preferência do usuário
   useEffect(() => setDarkState(prefersDarkMode), [prefersDarkMode]);
 
-  useEffect(() => {
-    //exibe as msgs dependendo do status das requisições
-    switch(status){
-      case 'failed': 
-        setMsg(error);
-        setSeverity('error');
-        setOpenSnackbar(true);
-        break;
-      case 'saved':
-        setMsg('Projeto Salvo com Sucesso!');
-        setSeverity('success');
-        setOpenSnackbar(true);
-        break;
-      case 'deleted':
-        setMsg('Projeto Excluído com Sucesso!');
-        setSeverity('success');
-        setOpenSnackbar(true);
-        break;
-      default:
-        break;
-    }
-  }
-  , [status, error]);
-
   //trata a mudança de estado
   const handleThemeChange = () => {
     setDarkState(!darkState);
@@ -104,16 +64,6 @@ function App() {
       setDrawerOpen(open);
   };
   
-  //close do snackbar
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-        return;
-    }
-    setOpenSnackbar(false);
-    setMsg('');
-    setSeverity('');
-  };
-
   return (
     <>
     <ThemeProvider theme={theme}>
@@ -130,11 +80,6 @@ function App() {
                 <Route path="/" component={() => <ListagemProjetos />}></Route>
               </Switch>
             </div>
-            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity={severity}>
-              {msg}
-              </Alert>
-            </Snackbar>
           </Container>
         </Router>
     </ThemeProvider>

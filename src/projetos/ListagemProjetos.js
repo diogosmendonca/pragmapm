@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
-import {Link} from "react-router-dom";
 import {fetchProjetos, deleteProjetoServer, setStatus, selectAllProjetos} from './ProjetosSlice'
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -28,7 +27,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {ProjetoDialog} from './FormProjeto';
 import Backdrop from '../utils/Backdrop';
-
+import Snackbar from '../utils/Snackbar';
 
 function ListaProjetos(props){
 
@@ -163,24 +162,55 @@ function ConfirmarExclusaoProjetoDialog(props) {
 
 function ListagemProjetos (props){
     const status = useSelector(state => state.projetos.status)
+    const error = useSelector(state => state.projetos.error)
     const dispatch = useDispatch()
     const [excluirId, setExcluirId] = useState(0);
     const [excluirNome, setExcluirNome] = useState('');
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
     const [openFormDialog, setOpenFormDialog] = useState(false);
     const [editId, setEditId] = useState(0);
-    
+
+    //states do snackbar de msgs
+    var [msg, setMsg] = useState(props.msg);
+    var [severity, setSeverity] = useState(props.severity);
+    const [openSnackbar, setOpenSnackbar] = useState(props.open);
+
+    //exibe as msgs no snackbar dependendo do status das requisições
+    useEffect(() => {
+        switch(status){
+          case 'failed': 
+            setMsg(error);
+            setSeverity('error');
+            setOpenSnackbar(true);
+            break;
+          case 'saved':
+            setMsg('Projeto Salvo com Sucesso!');
+            setSeverity('success');
+            setOpenSnackbar(true);
+            break;
+          case 'deleted':
+            setMsg('Projeto Excluído com Sucesso!');
+            setSeverity('success');
+            setOpenSnackbar(true);
+            break;
+          default:
+            break;
+        }
+    }, [status, error]);
+
+    //muda o estado de saved ou deleted para loaded, exibindo a listagem
     useEffect(() => {
         if (status === 'saved' || status === 'deleted'){
             dispatch(setStatus('loaded'));
         }
     }, [status, dispatch]);   
-
+    
+    //abre o confirm de exclusão
     useEffect(() => {
         if (excluirId !== 0){
             setOpenConfirmDialog(true);
         }
-    }, [excluirId]);   
+    }, [excluirId]);
 
     function handleConfirmarExclusao(){
         //dispatch
@@ -212,7 +242,7 @@ function ListagemProjetos (props){
                         variant="contained" color="primary" onClick={handleOpenFormProjeto} 
                         startIcon={<AddIcon />}>Novo</Button>
                 </Box>
-                </Box>
+            </Box>
             <ListaProjetos setExcluirNome={setExcluirNome} setExcluirId={setExcluirId} setEditId={handleOpenFormProjeto} />
             <ConfirmarExclusaoProjetoDialog open={openConfirmDialog} nome={excluirNome} 
                     handleConfirmar={handleConfirmarExclusao}
@@ -220,6 +250,8 @@ function ListagemProjetos (props){
             <ProjetoDialog id={editId} open={openFormDialog}
                     handleOpen={handleOpenFormProjeto} handleClose={handleCloseFormProjeto} />
             <Backdrop open={status === 'saving' || status === 'deleting'}/>
+            <Snackbar msg={msg} openSnackbar={openSnackbar} severity={severity} 
+                      setMsg={setMsg} setOpenSnackbar={setOpenSnackbar} setSeverity={setSeverity} />
         </>
     );
 }
