@@ -34,7 +34,7 @@
     "eject": "react-scripts eject",
     "acc_test_it": "npx cypress open",
     "acc_test_run": "npx cypress run",
-    "json-server": "json-server --watch shared/projetos.json --port 3004 -H 192.168.15.4 --delay 2000"
+    "json-server": "json-server --watch shared/projetos.json --port 3004 -H 192.168.15.4"
   },
   "eslintConfig": {
     "extends": "react-app"

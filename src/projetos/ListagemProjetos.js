@@ -121,7 +121,7 @@ function ItemProjeto(props){
             }
             <ListItemSecondaryAction>
                 { props.loading ? <Skeleton variant="circle" width={20} height={20} />
-                :<IconButton edge="end" aria-label="delete" 
+                :<IconButton id={`btn_excluir_${props.projeto.id}`} edge="end" aria-label="delete" 
                     onClick={() => props.onClickExcluirProjeto(props.projeto.id, props.projeto.nome)}>
                     <DeleteIcon />
                 </IconButton>
@@ -151,7 +151,7 @@ function ConfirmarExclusaoProjetoDialog(props) {
             <Button onClick={props.handleClose} color="primary">
               Cancelar
             </Button>
-            <Button onClick={props.handleConfirmar} color="primary" autoFocus>
+            <Button id="btn_confirmar_exclusao" onClick={props.handleConfirmar} color="primary" autoFocus>
               Confirmar
             </Button>
           </DialogActions>
@@ -236,9 +236,9 @@ function ListagemProjetos (props){
     return (
         <>            
             <Box display="flex" m={2}>
-                <Box flexGrow={1} m={1}><Typography variant="h5"  id="lbl_titulo_pagina">Projetos</Typography></Box>
+                <Box flexGrow={1} m={1}><Typography variant="h5"  id="lbl_titulo_pagina_listagem">Projetos</Typography></Box>
                 <Box >
-                    <Button id="Novo Projeto" name="btn_novo_projeto" 
+                    <Button id="btn_novo_projeto" name="btn_novo_projeto" 
                         variant="contained" color="primary" onClick={handleOpenFormProjeto} 
                         startIcon={<AddIcon />}>Novo</Button>
                 </Box>

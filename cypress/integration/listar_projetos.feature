@@ -9,10 +9,10 @@ Funcionalidade: Listagem de Projetos
 
     Contexto: 
         Dado que temos projetos cadastrados
-            | Projeto     |  Unidade  |  UnAtual | UnTotal | IDC | IDP |
-            | Projeto X   |  Semana   |  2       |  4      | 0.8 | 0.9 |
-            | Projeto Y   |  Mês      |  4       |  6      | 1.3 | 1.0 |
-            | Projeto Z   |  Semana   |  3       |  10     | 1.0 | 1.0 |
+            | id  | nome        |  unidade  |  unidadeAtual  | unidadesTotais | idc | idp |
+            | 1   | Projeto X   |  Semana   |  2             |  4             | 0.8 | 0.9 |
+            | 2   | Projeto Y   |  Mês      |  4             |  6             | 1.3 | 1.0 |
+            | 3   | Projeto Z   |  Semana   |  3             |  10            | 1.0 | 1.0 |
 
     Cenário: Exibir Listagem de Projetos
         Quando a tela de listagem de projetos é acessada
@@ -29,10 +29,11 @@ Funcionalidade: Listagem de Projetos
         Então a tela do projeto é exibida
 
     Cenário: Excluir projeto
-        Dado que é exibida a tela de listagem de projetos
+        Dado que é exibida a tela de listagem de projetos 
         Quando clico no ícone de excluir um projeto
            E confirmo a exclusão
-        Então que é exibida a tela de listagem de projetos
+        Então é exibida a tela de listagem de projetos
+           E é exibida a mensagem de exclusão com sucesso
            E o projeto excluído não está nela
 
 

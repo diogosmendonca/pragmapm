@@ -18,7 +18,7 @@ export default function Snackbar(props){
     };
 
     return (<MuiSnackbar open={props.openSnackbar} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity={props.severity}>
+              <Alert id="alert_msg" onClose={handleClose} severity={props.severity}>
               {props.msg}
               </Alert>
             </MuiSnackbar>);
